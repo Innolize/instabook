@@ -49,7 +49,7 @@ const Publicacion = () => {
                 <CardMedia
                     className={classes.media}
                     component="iframe"
-                    src="https://www.youtube.com/embed/jAt9VZpMIyM"
+                    src="https://www.youtube.com/embed/O-LkJlMZ1oM"
                     title="test"
                 />
                 <CardActions>

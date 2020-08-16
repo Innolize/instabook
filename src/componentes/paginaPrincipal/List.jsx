@@ -23,25 +23,25 @@ const ListaFeed = () => {
                     <Typography variant='h5'> Usuarios</Typography>
                 </ListItemText>
             </ListItem>
-            <ListItem>
+            <ListItem button>
                 <ListItemAvatar>
                     <Avatar alt="user avatar" src="https://picsum.photos/200/300"></Avatar>
                 </ListItemAvatar>
                 <ListItemText>User Instabook</ListItemText>
             </ListItem>
-            <ListItem>
+            <ListItem button>
                 <ListItemAvatar>
                     <Avatar alt="user avatar" src="https://picsum.photos/200/300"></Avatar>
                 </ListItemAvatar>
                 <ListItemText>User Instabook</ListItemText>
             </ListItem>
-            <ListItem>
+            <ListItem button>
                 <ListItemAvatar>
                     <Avatar alt="user avatar" src="https://picsum.photos/200/300"></Avatar>
                 </ListItemAvatar>
                 <ListItemText>User Instabook</ListItemText>
             </ListItem>
-            <ListItem>
+            <ListItem button>
                 <ListItemAvatar>
                     <Avatar alt="user avatar" src="https://picsum.photos/200/300"></Avatar>
                 </ListItemAvatar>
