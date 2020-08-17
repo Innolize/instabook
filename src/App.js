@@ -1,15 +1,23 @@
 import React from 'react';
 import Header from './componentes/header'
 import PaginaPrincipal from './componentes/paginaPrincipal'
+import IniciarSesion from './componentes/iniciarSesion/Index'
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
+
 
 function App() {
   return (
-    <div className="App">
-      <div style={{ backgroundColor: 'gray'}}>
+    <div className="App" style={{ backgroundColor: 'gray' }}>
+      <Router>
         <Header />
-        <PaginaPrincipal />
-      </div>
-    </div>
+        <Route exact path="/">
+          <PaginaPrincipal />
+        </Route>
+        <Route path="/signin">
+          <IniciarSesion />
+        </Route>
+      </Router>
+    </div >
   );
 }
 
