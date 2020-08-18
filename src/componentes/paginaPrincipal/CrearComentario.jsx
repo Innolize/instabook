@@ -5,7 +5,9 @@ import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        minWidth: 275,
+        minWidth: 480,
+        width: '100%',
+        marginTop: '15px' 
     },
     cardContainer: {
         height: 300,
@@ -24,7 +26,7 @@ const CrearComentario = () => {
     const dispatch = useDispatch()
 
     return (
-        <Card>
+        <Card className={classes.root}>
             <CardHeader
                 avatar={
                     <Avatar className={classes.avatarLarge} alt="avatar" src="https://picsum.photos/200/300"> </Avatar>
