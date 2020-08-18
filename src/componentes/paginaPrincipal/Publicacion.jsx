@@ -24,7 +24,8 @@ const useStyle = makeStyles((theme) => ({
     }
 }))
 
-const Publicacion = () => {
+const Publicacion = ({props}) => {
+
     const classes = useStyle()
     return (
         <div>
@@ -33,7 +34,7 @@ const Publicacion = () => {
                     avatar={
                         <Avatar className={classes.avatarLarge} alt="avatar" src="https://picsum.photos/200/300"> </Avatar>
                     }
-                    title="Usuario Instabook"
+                    title={props.user}
                     subheader="placeholder"
                     action={
                         <IconButton>
@@ -43,13 +44,13 @@ const Publicacion = () => {
                 />
                 <CardContent>
                     <Typography variant="body1">
-                        Labore reprehenderit nostrud tempor dolore sit reprehenderit pariatur sit consequat anim amet culpa qui. Sint et qui nisi officia id exercitation esse consequat ipsum dolore veniam fugiat pariatur do. Quis aute voluptate ea ea ipsum. Est aute anim est do ipsum enim veniam culpa ex pariatur ullamco velit. Culpa ex id consequat cupidatat ullamco consequat.
+                        {props.comment}
                     </Typography>
                 </CardContent>
                 <CardMedia
                     className={classes.media}
                     component="iframe"
-                    src="https://www.youtube.com/embed/O-LkJlMZ1oM"
+                    src={props.youtube}
                     title="test"
                 />
                 <CardActions>
