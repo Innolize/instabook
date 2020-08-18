@@ -1,14 +1,9 @@
-export const actionName = (payload) => {
-    return (dispatch, getState) => {
-
-        dispatch({ type: "TEST", payload })
-
-    }
-}
-
-
 export const agregaPublicacion = (payload) => {
-    return (dispatch, getState) => {
+    return async (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore();
+        await firestore.collection("publicaciones").add({
+            ...payload
+        })
         dispatch({
             type: "AGREGAR_PUBLICACION",
             payload

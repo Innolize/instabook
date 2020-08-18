@@ -24,8 +24,9 @@ const useStyle = makeStyles((theme) => ({
     }
 }))
 
-const Publicacion = ({props}) => {
-
+const Publicacion = ({ props }) => {
+    console.log(props)
+    debugger
     const classes = useStyle()
     return (
         <div>
