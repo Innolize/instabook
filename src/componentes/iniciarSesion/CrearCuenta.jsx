@@ -10,8 +10,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createAccount } from '../../redux/actions/authActions'
+import { Redirect } from 'react-router-dom';
 
 
 function Copyright() {
@@ -71,6 +72,11 @@ export default function SignUp() {
     }
 
     const classes = useStyles();
+
+    const authFirebase = useSelector(state => state.firebase.auth.uid)
+
+    if (authFirebase)
+        return <Redirect to="/"></Redirect>
 
     return (
         <Container component="main" maxWidth="xs">

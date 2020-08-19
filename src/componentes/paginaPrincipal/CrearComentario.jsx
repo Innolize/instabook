@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, makeStyles, TextField, Button, CardActions, Avatar } from '@material-ui/core'
 import { agregaPublicacion } from '../../redux/actions/index'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         minWidth: 480,
         width: '100%',
-        marginTop: '15px' 
+        marginTop: '15px'
     },
     cardContainer: {
         height: 300,
@@ -24,6 +25,14 @@ const CrearComentario = () => {
     const youtube = "https://www.youtube.com/embed/x5uF0-7M9vk"
     const classes = useStyles()
     const dispatch = useDispatch()
+
+    const auth = useSelector(state => state.firebase.auth.uid)
+
+    if (!auth)
+        return null
+
+
+
 
     return (
         <Card className={classes.root}>

@@ -37,14 +37,24 @@ export const createAccount = (payload) => {
             const resp = await firebase.auth().createUserWithEmailAndPassword(email, password)
             console.log(resp)
             await firestore.collection("usuarios").doc(resp.user.uid).set({
-                firstName,
+                user: firstName,
                 lastName,
                 email,
+                avatar: null,
+                descripcion: ""
             })
             dispatch({ type: "USER_CREATED" })
         } catch (error) {
             console.log(error)
         }
-
+        try {
+            await firebase.auth().signInWithEmailAndPassword(
+                email,
+                password
+            )
+            dispatch({ type: "LOGIN_SUCCESS" })
+        } catch (error) {
+            dispatch({ type: "LOGIN_ERROR", payload: error })
+        }
     }
 }

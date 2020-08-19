@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useSelector, useDispatch } from 'react-redux'
 import { signIn } from '../../redux/actions/authActions'
+import { Redirect } from 'react-router-dom';
 
 function Copyright() {
     return (
@@ -61,6 +62,11 @@ const SignIn = () => {
         e.preventDefault()
         dispatch(signIn({ email, password }))
     }
+
+    const authFirebase = useSelector(state => state.firebase.auth.uid)
+
+    if (authFirebase)
+        return <Redirect to="/"></Redirect>
 
     return (
         <Container component="main" maxWidth="xs">
