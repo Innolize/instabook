@@ -31,14 +31,10 @@ const ListaFeed = () => {
                 </ListItemText>
             </ListItem>
             {listaUsuarios && listaUsuarios.map(usuario => <Usuario props={usuario} key={usuario.id} />
-
-
             )}
         </List >
     )
 }
-
-
 
 const Usuario = ({ props }) => {
     return (

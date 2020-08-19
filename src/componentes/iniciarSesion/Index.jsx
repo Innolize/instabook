@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useSelector, useDispatch } from 'react-redux'
+import { signIn } from '../../redux/actions/authActions'
 
 function Copyright() {
     return (
@@ -47,7 +49,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = () => {
+
+    const auth = useSelector(state => state.auth)
+    const dispatch = useDispatch()
     const classes = useStyles();
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+
+    const logearOnClick = (e) => {
+        e.preventDefault()
+        dispatch(signIn({ email, password }))
+
+        console.log(auth)
+
+
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -70,6 +87,7 @@ const SignIn = () => {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <TextField
                         variant="outlined"
@@ -81,20 +99,24 @@ const SignIn = () => {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
                     />
+                    {auth.authError && <p>{auth.authError}</p>}
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={logearOnClick}
                     >
                         Sign In
           </Button>
+
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">
