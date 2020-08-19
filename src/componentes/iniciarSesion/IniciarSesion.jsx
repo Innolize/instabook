@@ -60,10 +60,6 @@ const SignIn = () => {
     const logearOnClick = (e) => {
         e.preventDefault()
         dispatch(signIn({ email, password }))
-
-        console.log(auth)
-
-
     }
 
     return (
@@ -107,7 +103,7 @@ const SignIn = () => {
                     />
                     {auth.authError && <p>{auth.authError}</p>}
                     <Button
-                        type="submit"
+                        type="button"
                         fullWidth
                         variant="contained"
                         color="primary"

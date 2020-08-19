@@ -28,14 +28,23 @@ export const logout = () => {
 }
 
 export const createAccount = (payload) => {
-    const [email, password] = payload
-    return async (dispatch, getState, { getFirebase }) => {
+    const [firstName, lastName, email, password] = payload
+    return async (dispatch, getState, { getFirebase, getFirestore }) => {
         const firebase = getFirebase()
+        const firestore = getFirestore()
+
         try {
-            await firebase.auth().createUserWithEmailAndPassword(email, password)
-            dispatch({ type: "ACCOUNT_CREATED" })
+            const resp = await firebase.auth().createUserWithEmailAndPassword(email, password)
+            console.log(resp)
+            await firestore.collection("usuarios").doc(resp.user.uid).set({
+                firstName,
+                lastName,
+                email,
+            })
+            dispatch({ type: "USER_CREATED" })
         } catch (error) {
-            dispatch({ type: "CREATE_ACCOUNT_FAILED", payload: error })
+            console.log(error)
         }
+
     }
 }

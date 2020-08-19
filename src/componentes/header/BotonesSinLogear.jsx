@@ -7,8 +7,10 @@ export const BotonesSinLogear = () => {
         <>
             <Button href="/signup" color="inherit">
                 SignUp
-                </Button>
-            <Button href="/signup" color="inherit">Login</Button>
+            </Button>
+            <Button href="/signin" color="inherit">
+                Login
+            </Button>
         </>
 
     )

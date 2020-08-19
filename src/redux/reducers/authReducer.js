@@ -18,8 +18,8 @@ export default (state = initialState, { type, payload }) => {
         case "LOGOUT_ERROR":
             console.log(payload)
             return state
-        case "ACCOUNT_CREATED":
-            console.log("account created")
+        case "USER_CREATED":
+            console.log("user created")
             return { ...state, isLogged: true }
         default:
             return state

@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
     const auth = useSelector(state => state.firebase.auth.uid)
-    console.log(auth)
 
     const classes = useStyles()
     return (
