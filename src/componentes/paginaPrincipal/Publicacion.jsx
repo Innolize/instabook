@@ -28,6 +28,7 @@ const Publicacion = ({ props }) => {
     console.log(props)
     debugger
     const classes = useStyle()
+
     return (
         <div>
             <Card className={classes.root}>
@@ -35,7 +36,7 @@ const Publicacion = ({ props }) => {
                     avatar={
                         <Avatar className={classes.avatarLarge} alt="avatar" src="https://picsum.photos/200/300"> </Avatar>
                     }
-                    title={props.user}
+                    title={props.firstName + " " + props.lastName}
                     subheader="placeholder"
                     action={
                         <IconButton>
@@ -48,12 +49,12 @@ const Publicacion = ({ props }) => {
                         {props.comment}
                     </Typography>
                 </CardContent>
-                <CardMedia
+                {/* <CardMedia
                     className={classes.media}
                     component="iframe"
                     src={props.youtube}
                     title="test"
-                />
+                /> */}
                 <CardActions>
                     <IconButton>
                         <FavoriteBorder />

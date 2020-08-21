@@ -17,20 +17,20 @@ const ListaFeed = () => {
     useFirestoreConnect(['usuarios'])
     const listaUsuarios = useSelector(state => state.firestore.ordered.usuarios)
     const classes = useStyles()
-        return (
-            <List className={classes.panel}>
-                <ListItem>
-                    <IconButton>
-                        <AccountCircle />
-                    </IconButton>
-                    <ListItemText>
-                        <Typography variant='h5'> Usuarios</Typography>
-                    </ListItemText>
-                </ListItem>
-                {listaUsuarios && listaUsuarios.map(usuario => <Usuario props={usuario} key={usuario.id} />
-                )}
-            </List >
-        )
+    return (
+        <List className={classes.panel}>
+            <ListItem>
+                <IconButton>
+                    <AccountCircle />
+                </IconButton>
+                <ListItemText>
+                    <Typography variant='h5'> Usuarios</Typography>
+                </ListItemText>
+            </ListItem>
+            {listaUsuarios && listaUsuarios.map(usuario => <Usuario props={usuario} key={usuario.id} />
+            )}
+        </List >
+    )
 }
 
 const Usuario = ({ props }) => {
@@ -39,7 +39,7 @@ const Usuario = ({ props }) => {
             <ListItemAvatar>
                 <Avatar alt={`${props.user}-${props.lastName}-avatar`} src={props.avatar ? props.avatar : "https://picsum.photos/200/300"}></Avatar>
             </ListItemAvatar>
-            <ListItemText>{`${props.user} ${props.lastName}`}</ListItemText>
+            <ListItemText>{`${props.firstName} ${props.lastName}`}</ListItemText>
         </ListItem>
     )
 }

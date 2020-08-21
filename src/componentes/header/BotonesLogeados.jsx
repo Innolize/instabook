@@ -1,17 +1,29 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
+import { Button, Avatar } from '@material-ui/core'
 import { logout } from '../../redux/actions/authActions'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export const BotonesLogeados = () => {
-    const dispatch = useDispatch()
 
+    // const idUser = useSelector(state => state.firebase.auth.uid)
+    const user = useSelector(state => state)
+
+    console.log(user)
+
+
+
+
+    const dispatch = useDispatch()
     const deslogear = () => {
         dispatch(logout())
     }
 
     return (
         <>
+            <Button color="inherit" >
+                <Avatar alt="user">XD</Avatar>
+                    Profile
+                    </Button>
             <Button color="inherit" onClick={deslogear}>Logout</Button>
         </>
     )

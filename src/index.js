@@ -19,11 +19,18 @@ const store = createStore(reducer, {}, compose(
 )
 )
 
+const rrfConfig = {
+  userProfile: 'usuarios',
+  useFirestoreForProfile: true
+}
+
 const rrfProps = {
   firebase,
-  config: fbConfig,
+  config: rrfConfig,
   dispatch: store.dispatch,
-  createFirestoreInstance
+  createFirestoreInstance,
+  presence: 'presence',
+  sessions: 'sessions'
 }
 
 function AuthIsLoaded({ children }) {

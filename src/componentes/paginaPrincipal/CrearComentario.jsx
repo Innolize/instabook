@@ -21,12 +21,15 @@ const useStyles = makeStyles((theme) => ({
 
 const CrearComentario = () => {
     const [value, setvalue] = useState("")
-    const user = "testcomentario"
+    const firstName = useSelector(state => state.firebase.profile.firstName)
+    const lastName = useSelector(state => state.firebase.profile.lastName)
+    const auth = useSelector(state => state.firebase.auth.uid)
+
     const youtube = "https://www.youtube.com/embed/x5uF0-7M9vk"
     const classes = useStyles()
     const dispatch = useDispatch()
 
-    const auth = useSelector(state => state.firebase.auth.uid)
+
 
     if (!auth)
         return null
@@ -40,7 +43,7 @@ const CrearComentario = () => {
                 avatar={
                     <Avatar className={classes.avatarLarge} alt="avatar" src="https://picsum.photos/200/300"> </Avatar>
                 }
-                title="test test test"
+                title={firstName + " " + lastName}
             />
             <CardContent>
                 <TextField
@@ -51,7 +54,7 @@ const CrearComentario = () => {
                 />
             </CardContent>
             <CardActions>
-                <Button variant="contained" color="primary" onClick={() => dispatch(agregaPublicacion({ comment: value, user, youtube }))}>Send</Button>
+                <Button variant="contained" color="primary" onClick={() => dispatch(agregaPublicacion({ comment: value, firstName, lastName, userID: auth, youtube }))}>Send</Button>
             </CardActions>
 
         </Card>
