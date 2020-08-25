@@ -47,7 +47,6 @@ export const unirArray = () => {
 }
 
 export const darLike = (payload) => {
-    debugger
     console.log(payload)
     const { publicacionID, IDUsuario } = payload
     return async (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -74,6 +73,7 @@ export const quitarLike = (payload) => {
             doc.update({
                 likes: firestore.FieldValue.arrayRemove(IDUsuario)
             })
+            dispatch({ type: "QUITAR_LIKE" })
         } catch (error) {
             console.log(error)
         }

@@ -3,6 +3,7 @@ import Header from './componentes/header'
 import PaginaPrincipal from './componentes/paginaPrincipal'
 import IniciarSesion from './componentes/iniciarSesion/IniciarSesion'
 import CrearCuenta from './componentes/iniciarSesion/CrearCuenta'
+import Profile from './componentes/perfil'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <CrearCuenta />
+        </Route>
+        <Route path="/profile/:userID">
+          <Profile />
         </Route>
       </Router>
     </div >

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const CrearComentario = () => {
-    const [value, setvalue] = useState("")
+    const [value, setValue] = useState("")
     const firstName = useSelector(state => state.firebase.profile.firstName)
     const lastName = useSelector(state => state.firebase.profile.lastName)
     const auth = useSelector(state => state.firebase.auth.uid)
@@ -29,6 +29,13 @@ const CrearComentario = () => {
 
     if (!auth)
         return null
+
+    const nuevaPublicacion = () => {
+        dispatch(agregaPublicacion({ comment: value, firstName, lastName, userID: auth, youtube }))
+        setValue("")
+    }
+
+
 
     return (
         <Card className={classes.root}>
@@ -43,14 +50,15 @@ const CrearComentario = () => {
                     className={classes.styledTextfield}
                     size="medium"
                     multiline
-                    onChange={(e) => setvalue(e.target.value)}
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
                 />
             </CardContent>
             <CardActions>
-                <Button variant="contained" color="primary" onClick={() => dispatch(agregaPublicacion({ comment: value, firstName, lastName, userID: auth, youtube }))}>Send</Button>
+                <Button variant="contained" color="primary" onClick={nuevaPublicacion}>Send</Button>
             </CardActions>
 
-        </Card>
+        </Card >
     )
 }
 

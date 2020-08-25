@@ -16,6 +16,8 @@ const ListaFeed = () => {
 
     useFirestoreConnect(['usuarios'])
     const listaUsuarios = useSelector(state => state.firestore.ordered.usuarios)
+    const test = useSelector(state => state.firestore)
+    console.log(test)
     const classes = useStyles()
     return (
         <List className={classes.panel}>

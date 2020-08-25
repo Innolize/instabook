@@ -79,7 +79,6 @@ const Publicacion = ({ props }) => {
 }
 
 const Opciones = ({ postAuthor, postID, currentUserID }) => {
-    debugger
     const selfpost = (currentUserID === postAuthor)
     const dispatch = useDispatch()
 
