@@ -28,7 +28,6 @@ export const logout = () => {
 }
 
 export const createAccount = (payload) => {
-    console.log(payload)
     const [firstName, lastName, email, password] = payload
     return async (dispatch, getState, { getFirebase, getFirestore }) => {
         const firebase = getFirebase()
@@ -36,7 +35,6 @@ export const createAccount = (payload) => {
 
         try {
             const resp = await firebase.auth().createUserWithEmailAndPassword(email, password)
-            console.log(resp)
             await firestore.collection("usuarios").doc(resp.user.uid).set({
                 firstName,
                 lastName,

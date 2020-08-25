@@ -29,7 +29,6 @@ const PaginaPrincipal = () => {
     useFirestoreConnect(['publicaciones'])
     const publicaciones = useSelector((state) => state.firestore.ordered.publicaciones)
     console.log(publicaciones)
-    debugger
     return (
         <Grid container>
             <Grid item xs={"auto"} sm={2} md={3} lg={4}>

@@ -1,6 +1,8 @@
-import React from 'react'
-import { Card, CardContent, Typography, makeStyles, Avatar, IconButton, CardHeader, CardMedia, CardActions } from '@material-ui/core'
-import { Share, FavoriteBorder, MoreVert } from '@material-ui/icons'
+import React, { useState } from 'react'
+import { Card, CardContent, Typography, makeStyles, Avatar, IconButton, CardHeader, CardActions, Menu, MenuItem } from '@material-ui/core'
+import { Share, FavoriteBorder, MoreVert, Favorite } from '@material-ui/icons'
+import { eliminaPublicacion, darLike, quitarLike } from '../../redux/actions'
+import { useDispatch, useSelector } from 'react-redux'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -25,9 +27,13 @@ const useStyle = makeStyles((theme) => ({
 }))
 
 const Publicacion = ({ props }) => {
-    console.log(props)
-    debugger
+    const dispatch = useDispatch()
+    const currentUserID = useSelector(state => state.firebase.auth.uid)
+    const userLike = props.likes.includes(currentUserID)
+    console.log(userLike)
     const classes = useStyle()
+
+
 
     return (
         <div>
@@ -38,10 +44,12 @@ const Publicacion = ({ props }) => {
                     }
                     title={props.firstName + " " + props.lastName}
                     subheader="placeholder"
-                    action={
-                        <IconButton>
-                            <MoreVert />
-                        </IconButton>
+                    action={currentUserID &&
+                        <Opciones
+                            postAuthor={props.userID}
+                            postID={props.id}
+                            currentUserID={currentUserID}
+                        ></Opciones>
                     }
                 />
                 <CardContent>
@@ -56,17 +64,54 @@ const Publicacion = ({ props }) => {
                     title="test"
                 /> */}
                 <CardActions>
-                    <IconButton>
-                        <FavoriteBorder />
+                    <IconButton onClick={userLike ? () => dispatch(quitarLike({ publicacionID: props.id, IDUsuario: currentUserID })) : () => dispatch(darLike({ publicacionID: props.id, IDUsuario: currentUserID }))}>
+                        {userLike ? <Favorite /> : <FavoriteBorder />}
                     </IconButton>
+                    {props.likes.length > 0 ? props.likes.length : null}
                     <IconButton>
                         <Share></Share>
                     </IconButton>
+                    1
                 </CardActions>
             </Card>
         </div >
     )
 }
+
+const Opciones = ({ postAuthor, postID, currentUserID }) => {
+    debugger
+    const selfpost = (currentUserID === postAuthor)
+    const dispatch = useDispatch()
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    return (
+        <div>
+            <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                <MoreVert />
+            </IconButton>
+            <Menu
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                {selfpost && <MenuItem onClick={() => dispatch(eliminaPublicacion(postID))}>Remove</MenuItem>}
+                <MenuItem onClick={handleClose}>Unfollow User</MenuItem>
+                <MenuItem onClick={handleClose}>Report</MenuItem>
+            </Menu>
+        </div>
+    );
+}
+
 
 
 export default Publicacion

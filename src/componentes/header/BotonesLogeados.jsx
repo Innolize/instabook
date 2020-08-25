@@ -4,14 +4,7 @@ import { logout } from '../../redux/actions/authActions'
 import { useDispatch, useSelector } from 'react-redux'
 
 export const BotonesLogeados = () => {
-
     // const idUser = useSelector(state => state.firebase.auth.uid)
-    const user = useSelector(state => state)
-
-    console.log(user)
-
-
-
 
     const dispatch = useDispatch()
     const deslogear = () => {

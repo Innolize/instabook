@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, makeStyles, TextField, Button, CardActions, Avatar } from '@material-ui/core'
 import { agregaPublicacion } from '../../redux/actions/index'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-
 const CrearComentario = () => {
     const [value, setvalue] = useState("")
     const firstName = useSelector(state => state.firebase.profile.firstName)
@@ -29,13 +27,8 @@ const CrearComentario = () => {
     const classes = useStyles()
     const dispatch = useDispatch()
 
-
-
     if (!auth)
         return null
-
-
-
 
     return (
         <Card className={classes.root}>
