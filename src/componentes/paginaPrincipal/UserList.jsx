@@ -1,9 +1,9 @@
 import React from 'react'
-import { List, ListItemAvatar, Avatar, ListItem, ListItemText, Typography, IconButton } from '@material-ui/core'
+import { List, ListItemAvatar, Avatar, ListItem, ListItemText, Typography, IconButton, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
 import { useSelector } from 'react-redux'
-import { useFirestoreConnect } from 'react-redux-firebase'
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase'
 import { NavLink } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -14,6 +14,12 @@ const useStyles = makeStyles(theme => ({
     navLink: {
         textDecoration: "none",
         color: "black"
+    },
+    spinnerContainer: {
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: 'center',
+        height: '400px'
     }
 
 }))
@@ -23,6 +29,11 @@ const ListaFeed = () => {
     useFirestoreConnect(['usuarios'])
     const listaUsuarios = useSelector(state => state.firestore.ordered.usuarios)
     const classes = useStyles()
+    debugger
+    if (!isLoaded(listaUsuarios)) {
+        return <CircularProgress className={classes.spinnerContainer}>loading...</CircularProgress>
+    }
+
     return (
         <List className={classes.panel}>
             <ListItem>

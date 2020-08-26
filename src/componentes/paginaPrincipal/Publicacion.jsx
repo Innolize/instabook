@@ -4,6 +4,7 @@ import { Share, FavoriteBorder, MoreVert, Favorite } from '@material-ui/icons'
 import { eliminaPublicacion, darLike, quitarLike } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
+import { NavLink } from 'react-router-dom'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -24,6 +25,10 @@ const useStyle = makeStyles((theme) => ({
         width: 480,
         display: "flex",
         alignSelf: 'center',
+    },
+    linkSinDecoracion: {
+        textDecoration: 'none',
+        color: 'black'
     }
 }))
 
@@ -39,9 +44,16 @@ const Publicacion = ({ props }) => {
             <Card className={classes.root}>
                 <CardHeader
                     avatar={
-                        <Avatar className={classes.avatarLarge} alt="avatar" src="https://picsum.photos/200/300"> </Avatar>
+                        <NavLink to={`/profile/${props.userID}`}>
+                            <Avatar className={classes.avatarLarge} alt="avatar" src="https://picsum.photos/200/300" />
+                        </NavLink>
                     }
-                    title={props.firstName + " " + props.lastName}
+
+                    title={
+                        <NavLink to={`/profile/${props.userID}`} className={classes.linkSinDecoracion}>
+                            <Typography variant="h6">{props.firstName + " " + props.lastName}</Typography>
+                        </NavLink>
+                    }
                     subheader={time}
                     action={currentUserID &&
                         <Opciones
@@ -50,19 +62,20 @@ const Publicacion = ({ props }) => {
                             currentUserID={currentUserID}
                         ></Opciones>
                     }
+
                 />
-                <CardContent>
+                <CardContent >
                     <Typography variant="body1">
                         {props.comment}
                     </Typography>
-                </CardContent>
+                </CardContent >
                 {/* <CardMedia
                     className={classes.media}
                     component="iframe"
                     src={props.youtube}
                     title="test"
                 /> */}
-                <CardActions>
+                < CardActions >
                     <IconButton onClick={userLike ? () => dispatch(quitarLike({ publicacionID: props.id, IDUsuario: currentUserID })) : () => dispatch(darLike({ publicacionID: props.id, IDUsuario: currentUserID }))}>
                         {userLike ? <Favorite /> : <FavoriteBorder />}
                     </IconButton>
@@ -70,9 +83,9 @@ const Publicacion = ({ props }) => {
                     <IconButton>
                         <Share></Share>
                     </IconButton>
-                    1
-                </CardActions>
-            </Card>
+1
+                </CardActions >
+            </Card >
         </div >
     )
 }

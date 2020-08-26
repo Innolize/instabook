@@ -1,6 +1,6 @@
 import React from 'react'
-import { makeStyles, Card, CardContent, CardMedia, Typography } from '@material-ui/core'
-import { useFirestoreConnect } from 'react-redux-firebase'
+import { makeStyles, Card, CardContent, CardMedia, Typography, Container, CircularProgress } from '@material-ui/core'
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 // import moduleName from 'react-router-firestore'
@@ -22,25 +22,44 @@ const useStyles = makeStyles(() => ({
         display: "flex",
         alignSelf: 'center',
 
+    },
+    contenedor: {
+        minWidth: 480,
+        minHeight: 320,
+        backgroundColor: 'gray'
+    },
+    spinnerContainer: {
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: 'center',
+        height: '400px'
     }
 }))
 
 const Perfil = () => {
     const { userID } = useParams()
-    useFirestoreConnect(["usuarios"])
-
-    const user = useSelector(state => state.firestore.data.usuarios)
-    let test = user ? user[userID] : ''
     const classes = useStyles()
+    useFirestoreConnect({
+        collection: "usuarios",
+        doc: userID
+    })
+    const user = useSelector(state => state.firestore.data.usuarios[userID])
+
+    if (!isLoaded(user))
+        return <CircularProgress className={classes.spinnerContainer}>loading...</CircularProgress>
+
 
     return (
         <Card className={classes.root}>
-            <CardMedia className={classes.media}
+            <Container className={classes.contenedor}>
+                <Typography variant='h3' align='center'> No Avatar</Typography>
+            </Container>
+            {/* <CardMedia className={classes.media}
                 image="https://picsum.photos/480/320"
-            />
+            /> */}
             <CardContent>
-                {test && <Typography align="center" variant="h3">{test.firstName + " " + test.lastName}</Typography>}
-                {test && <Typography variant="body1">{test.descripcion}</Typography>}
+                <Typography align="center" variant="h3">{user.firstName + " " + user.lastName}</Typography>
+                <Typography variant="body1">{user.descripcion}</Typography>
             </CardContent>
         </Card>
     )
