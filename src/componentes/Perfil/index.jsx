@@ -4,7 +4,7 @@ import CartaUsuario from './CartaUsuario'
 import { useParams } from 'react-router-dom'
 import ListaPublicaciones from '../paginaPrincipal/ListaPublicaciones'
 
-const Index = () => {
+const Profile = () => {
     const { userID } = useParams()
     const propiedadesLista = {
         collection: "publicaciones",
@@ -25,4 +25,4 @@ const Index = () => {
     )
 }
 
-export default Index
+export default Profile

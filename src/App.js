@@ -3,7 +3,7 @@ import Header from './componentes/header'
 import PaginaPrincipal from './componentes/paginaPrincipal'
 import IniciarSesion from './componentes/iniciarSesion/IniciarSesion'
 import CrearCuenta from './componentes/iniciarSesion/CrearCuenta'
-import Profile from './componentes/perfil'
+import Profile from './componentes/perfil/index'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 function App() {
