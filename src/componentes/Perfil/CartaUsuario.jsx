@@ -1,5 +1,9 @@
 import React from 'react'
-import { makeStyles, Card, CardHeader, CardContent, Avatar, CardMedia, Typography } from '@material-ui/core'
+import { makeStyles, Card, CardContent, CardMedia, Typography } from '@material-ui/core'
+import { useFirestoreConnect } from 'react-redux-firebase'
+import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+// import moduleName from 'react-router-firestore'
 
 
 const useStyles = makeStyles(() => ({
@@ -22,7 +26,11 @@ const useStyles = makeStyles(() => ({
 }))
 
 const Perfil = () => {
-    console.log("asd")
+    const { userID } = useParams()
+    useFirestoreConnect(["usuarios"])
+
+    const user = useSelector(state => state.firestore.data.usuarios)
+    let test = user ? user[userID] : ''
     const classes = useStyles()
 
     return (
@@ -31,8 +39,8 @@ const Perfil = () => {
                 image="https://picsum.photos/480/320"
             />
             <CardContent>
-                <Typography align="center" variant="h3">Test</Typography>
-                <Typography variant="body1">Irure aliqua aliquip mollit officia elit aliqua laboris occaecat. Labore minim laboris irure officia et aliqua in ex est amet. Voluptate ex et incididunt in sint commodo officia eu fugiat est ipsum minim.</Typography>
+                {test && <Typography align="center" variant="h3">{test.firstName + " " + test.lastName}</Typography>}
+                {test && <Typography variant="body1">{test.descripcion}</Typography>}
             </CardContent>
         </Card>
     )

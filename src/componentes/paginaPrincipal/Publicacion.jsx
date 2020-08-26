@@ -3,6 +3,7 @@ import { Card, CardContent, Typography, makeStyles, Avatar, IconButton, CardHead
 import { Share, FavoriteBorder, MoreVert, Favorite } from '@material-ui/icons'
 import { eliminaPublicacion, darLike, quitarLike } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
+import moment from 'moment'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -30,10 +31,8 @@ const Publicacion = ({ props }) => {
     const dispatch = useDispatch()
     const currentUserID = useSelector(state => state.firebase.auth.uid)
     const userLike = props.likes.includes(currentUserID)
-    console.log(userLike)
     const classes = useStyle()
-
-
+    const time = moment(new Date(props.date), 'YYYYMMDD').fromNow();
 
     return (
         <div>
@@ -43,7 +42,7 @@ const Publicacion = ({ props }) => {
                         <Avatar className={classes.avatarLarge} alt="avatar" src="https://picsum.photos/200/300"> </Avatar>
                     }
                     title={props.firstName + " " + props.lastName}
-                    subheader="placeholder"
+                    subheader={time}
                     action={currentUserID &&
                         <Opciones
                             postAuthor={props.userID}
