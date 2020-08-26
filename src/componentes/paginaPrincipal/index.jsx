@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Hidden } from '@material-ui/core'
 import ListaFeed from './UserList'
 import CrearComentario from './CrearComentario'
 import ListaPublicaciones from './ListaPublicaciones'
@@ -12,7 +12,9 @@ const PaginaPrincipal = () => {
     return (
         <Grid container>
             <Grid item xs={"auto"} sm={2} md={3} lg={4}>
-                <ListaFeed />
+                <Hidden smDown>
+                    <ListaFeed />
+                </Hidden>
             </Grid>
             <Grid item xs={12} sm={8} md={6} lg={4}>
                 <CrearComentario></CrearComentario>

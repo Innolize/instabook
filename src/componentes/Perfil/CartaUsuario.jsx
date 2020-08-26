@@ -43,6 +43,7 @@ const Perfil = () => {
         collection: "usuarios",
         doc: userID
     })
+    
     const user = useSelector(state => state.firestore.data.usuarios[userID])
 
     if (!isLoaded(user))

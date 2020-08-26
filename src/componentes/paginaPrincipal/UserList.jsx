@@ -29,7 +29,6 @@ const ListaFeed = () => {
     useFirestoreConnect(['usuarios'])
     const listaUsuarios = useSelector(state => state.firestore.ordered.usuarios)
     const classes = useStyles()
-    debugger
     if (!isLoaded(listaUsuarios)) {
         return <CircularProgress className={classes.spinnerContainer}>loading...</CircularProgress>
     }
