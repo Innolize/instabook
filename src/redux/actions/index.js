@@ -28,8 +28,6 @@ export const eliminaPublicacion = (payload) => {
 }
 
 export const unirArray = () => {
-    debugger
-    let nuevoElemento = 6
     return async (dispatch, getState, { getFirebase, getFirestore }) => {
         try {
             const firestore = await getFirestore()
