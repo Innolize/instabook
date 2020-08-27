@@ -1,20 +1,27 @@
 import React from 'react'
-import { makeStyles, Card, CardContent, Typography, Container, CircularProgress } from '@material-ui/core'
+import { makeStyles, Card, CardContent, Typography, Container, CircularProgress, Input, Button } from '@material-ui/core'
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import NoAvatar from './NoAvatar'
 // import moduleName from 'react-router-firestore'
 
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     root: {
-        minWidth: 480,
+        width: 480,
         minHeight: 400,
         display: "flex",
         flexDirection: "column",
-        margin: "10px 0px 10px 0px",
-        padding: "15px 0px 15px 0px",
-        backgroundColor: "white"
+        marginTop: "10px",
+        marginBotton: "10px",
+        paddingTop: "15px",
+        paddingBottom: "15px",
+        backgroundColor: "white",
+        [theme.breakpoints.up('lg')]: {
+            width: '100%'
+        },
+
     },
     media: {
         height: 300,
@@ -33,6 +40,12 @@ const useStyles = makeStyles(() => ({
         justifyContent: "center",
         alignItems: 'center',
         height: '400px'
+    },
+    avatar: {
+        maxWidth: 480,
+        [theme.breakpoints.up('lg')]: {
+            maxWidth: '100%'
+        },
     }
 }))
 
@@ -53,11 +66,8 @@ const Perfil = () => {
     return (
         <Card className={classes.root}>
             <Container className={classes.contenedor}>
-                <Typography variant='h3' align='center'> No Avatar</Typography>
+                {user.avatar ? <img className={classes.avatar} alt={user.avatar} src={user.avatar} /> : <NoAvatar></NoAvatar>}
             </Container>
-            {/* <CardMedia className={classes.media}
-                image="https://picsum.photos/480/320"
-            /> */}
             <CardContent>
                 <Typography align="center" variant="h3">{user.firstName + " " + user.lastName}</Typography>
                 <Typography variant="body1">{user.descripcion}</Typography>

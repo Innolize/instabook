@@ -77,3 +77,33 @@ export const quitarLike = (payload) => {
         }
     }
 }
+
+
+export const subirImagen = (payload) => {
+    console.log(payload)
+    const { imagen, userID } = payload
+    return async (dispatch, getState, { getFirebase, getFirestore }) => {
+        debugger
+        const firebase = getFirebase();
+        const firestore = getFirestore()
+        const imagesPath = "perfil";
+
+        try {
+            debugger
+            const respuesta = await firebase.uploadFile(imagesPath, imagen)
+            debugger
+            const referencia = respuesta.uploadTaskSnapshot.ref.location.path_
+            const storage = firebase.storage();
+            const pathReference = storage.ref(referencia);
+            const imagenURL = await pathReference.getDownloadURL()
+            firestore.collection("usuarios").doc(userID).update({
+                avatar: imagenURL
+            })
+
+            debugger
+            dispatch({ type: "ADDED_IMAGE", imagenURL });
+        } catch (error) {
+            console.log("upload error: ", error)
+        }
+    };
+};

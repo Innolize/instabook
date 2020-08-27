@@ -1,6 +1,7 @@
 export const signIn = (credentials) => {
     return async (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
+        debugger
         try {
             await firebase.auth().signInWithEmailAndPassword(
                 credentials.email,
@@ -16,6 +17,7 @@ export const signIn = (credentials) => {
 }
 
 export const logout = () => {
+    debugger
     return async (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase()
         try {

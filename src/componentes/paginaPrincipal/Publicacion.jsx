@@ -45,7 +45,7 @@ const Publicacion = ({ props }) => {
                 <CardHeader
                     avatar={
                         <NavLink to={`/profile/${props.userID}`}>
-                            <Avatar className={classes.avatarLarge} alt="avatar" src="https://picsum.photos/200/300" />
+                            <Avatar className={classes.avatarLarge} alt="avatar" src={props.avatar} />
                         </NavLink>
                     }
 

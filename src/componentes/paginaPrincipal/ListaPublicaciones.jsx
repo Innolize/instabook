@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
+import { useFirestoreConnect, isLoaded, isEmpty, useFirebase } from 'react-redux-firebase'
 import { useSelector } from 'react-redux'
 import { CircularProgress, makeStyles } from '@material-ui/core'
 import Publicacion from './Publicacion'
@@ -24,7 +24,7 @@ const ListaPublicaciones = ({ objeto }) => {
     useFirestoreConnect([
         objeto
     ])
-
+    
     const publicaciones = useSelector((state) => state.firestore.ordered.publicaciones)
 
     if (!isLoaded(publicaciones)) {
@@ -34,7 +34,7 @@ const ListaPublicaciones = ({ objeto }) => {
     if (isEmpty(publicaciones)) {
         return null
     }
-
+    
     return (
         publicaciones.map((publicacion) => <Publicacion props={publicacion} key={publicacion.id} />)
     )
