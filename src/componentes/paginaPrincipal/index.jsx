@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Hidden } from '@material-ui/core'
 import ListaFeed from './UserList'
-import CrearComentario from './CrearComentario'
+import CrearComentario from './CrearPublicacion'
 import ListaPublicaciones from './ListaPublicaciones'
 
 const PaginaPrincipal = () => {

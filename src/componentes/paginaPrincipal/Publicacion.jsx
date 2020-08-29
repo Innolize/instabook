@@ -5,6 +5,7 @@ import { eliminaPublicacion, darLike, quitarLike } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 import { NavLink } from 'react-router-dom'
+import CrearComentario from './CrearComentario'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -46,57 +47,63 @@ const Publicacion = ({ props }) => {
     const time = moment(new Date(props.date), 'YYYYMMDD').fromNow();
 
     return (
-        <Card className={classes.root}>
-            <CardHeader
-                avatar={
-                    <NavLink to={`/profile/${props.userID}`}>
-                        <Avatar className={classes.avatarLarge} alt="avatar" src={props.avatar} />
-                    </NavLink>
-                }
+        <>
+            <Card className={classes.root}>
+                <CardHeader
+                    avatar={
+                        <NavLink to={`/profile/${props.userID}`}>
+                            <Avatar className={classes.avatarLarge} alt="avatar" src={props.avatar} />
+                        </NavLink>
+                    }
 
-                title={
-                    <NavLink to={`/profile/${props.userID}`} className={classes.linkSinDecoracion}>
-                        <Typography variant="h6">{props.firstName + " " + props.lastName}</Typography>
-                    </NavLink>
-                }
-                subheader={time}
-                action={currentUserID &&
-                    <Opciones
-                        postAuthor={props.userID}
-                        postID={props.id}
-                        currentUserID={currentUserID}
-                    ></Opciones>
-                }
+                    title={
+                        <NavLink to={`/profile/${props.userID}`} className={classes.linkSinDecoracion}>
+                            <Typography variant="h6">{props.firstName + " " + props.lastName}</Typography>
+                        </NavLink>
+                    }
+                    subheader={time}
+                    action={currentUserID &&
+                        <Opciones
+                            postAuthor={props.userID}
+                            postID={props.id}
+                            currentUserID={currentUserID}
+                        ></Opciones>
+                    }
 
-            />
-            <CardContent >
-                <Typography variant="body1">
-                    {props.comment}
-                </Typography>
-            </CardContent >
-            {props.youtube && <CardMedia
-                className={classes.cardVideo}
-                component="iframe"
-                src={props.youtube}
-                title="test"
-            />}
-            {props.image && <CardMedia
-                className={classes.cardImage}
-                component='image'
-                image={"https://i.picsum.photos/id/401/200/400.jpg?hmac=mqbaQswuaRhN4kdxiidldM2DsH-ykG3TOqlyZO8ZlpY"}
-                title="test"
-            />}
-            < CardActions >
-                <IconButton onClick={userLike ? () => dispatch(quitarLike({ publicacionID: props.id, IDUsuario: currentUserID })) : () => dispatch(darLike({ publicacionID: props.id, IDUsuario: currentUserID }))}>
-                    {userLike ? <Favorite /> : <FavoriteBorder />}
-                </IconButton>
-                {props.likes.length > 0 ? props.likes.length : null}
-                <IconButton>
-                    <Share></Share>
-                </IconButton>
+                />
+                <CardContent >
+                    <Typography variant="body1">
+                        {props.comment}
+                    </Typography>
+                </CardContent >
+                {props.youtube && <CardMedia
+                    className={classes.cardVideo}
+                    component="iframe"
+                    src={props.youtube}
+                    title="test"
+                />}
+                {props.image && <CardMedia
+                    className={classes.cardImage}
+                    image={"https://i.picsum.photos/id/401/200/400.jpg?hmac=mqbaQswuaRhN4kdxiidldM2DsH-ykG3TOqlyZO8ZlpY"}
+                    title="test"
+                />}
+                < CardActions >
+                    <IconButton onClick={userLike ? () => dispatch(quitarLike({ publicacionID: props.id, IDUsuario: currentUserID })) : () => dispatch(darLike({ publicacionID: props.id, IDUsuario: currentUserID }))}>
+                        {userLike ? <Favorite /> : <FavoriteBorder />}
+                    </IconButton>
+                    {props.likes.length > 0 ? props.likes.length : null}
+                    <IconButton>
+                        <Share></Share>
+                    </IconButton>
 1
                 </CardActions >
-        </Card >
+                <CrearComentario
+                    userID={props.userID}
+                    postID={props.id}
+                />
+
+            </Card >
+        </>
     )
 }
 

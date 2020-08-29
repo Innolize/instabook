@@ -27,23 +27,6 @@ export const eliminaPublicacion = (payload) => {
 
 }
 
-export const unirArray = () => {
-    return async (dispatch, getState, { getFirebase, getFirestore }) => {
-        try {
-            const firestore = await getFirestore()
-            const test = firestore.collection("test").doc("sk7BY9G9xFmTIsDfuB2H")
-            await test.update({
-                array: firestore.FieldValue.arrayRemove(1)
-            });
-        } catch (e) {
-            console.log(e)
-        }
-        debugger
-        //     type: "ELIMINA_PUBLICACION"
-    }
-
-}
-
 export const darLike = (payload) => {
     console.log(payload)
     const { publicacionID, IDUsuario } = payload
@@ -107,3 +90,32 @@ export const subirImagen = (payload) => {
         }
     };
 };
+
+export const agregaComentario = (payload) => {
+    const { postID, userID, comment } = payload
+    console.log('postID', postID)
+    console.log('userID', userID)
+    console.log(comment)
+    debugger
+    return async (dispatch, getState, { getFirebase, getFirestore }) => {
+
+        try {
+            const firestore = getFirestore();
+            const ref = await firestore.collection("publicaciones").doc(postID).collection('comentarios')
+            debugger
+            ref.add
+                ({
+                    ...payload,
+                    likes: [],
+                    date: Date.now()
+                })
+            dispatch({
+                type: "AGREGAR_COMENTARIO",
+                payload
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+}

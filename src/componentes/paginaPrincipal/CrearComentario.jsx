@@ -1,94 +1,55 @@
 import React, { useState } from 'react'
-import { Card, CardContent, CardHeader, makeStyles, TextField, Button, CardActions, Avatar, Switch, Input, IconButton } from '@material-ui/core'
-import { InsertPhoto } from '@material-ui/icons'
-import YouTubeIcon from '@material-ui/icons/YouTube';
-import { agregaPublicacion } from '../../redux/actions/index'
-import { useDispatch, useSelector } from 'react-redux'
+import { Avatar, Input, Box, makeStyles, Button, IconButton, Divider } from '@material-ui/core'
+import { Send } from '@material-ui/icons'
+import { useDispatch } from 'react-redux'
+import { agregaComentario } from '../../redux/actions/index.js'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
     root: {
-        minWidth: 480,
-        width: '100%',
-        marginTop: '15px'
+        display: "flex",
+        margin: "8px",
     },
-    cardContainer: {
-        height: 300,
-    },
-    styledTextfield: {
-        width: '100%',
+    inputText: {
+        flexGrow: 1
     }
-}))
+})
 
-const CrearComentario = () => {
-    const [value, setValue] = useState("")
-    const [youtube, setYoutube] = useState(false)
-    const [image, setImage] = useState(false)
-    const [youtubeLink, setYoutubeLink] = useState('')
-    const [imageLink, setImageLink] = useState('')
 
-    const firstName = useSelector(state => state.firebase.profile.firstName)
-    const lastName = useSelector(state => state.firebase.profile.lastName)
-    const auth = useSelector(state => state.firebase.auth.uid)
-
+const CrearComentario = ({ userID, postID }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const [comentario, setComentario] = useState("")
+    console.log(comentario)
 
-    if (!auth)
-        return null
-
-    const nuevaPublicacion = () => {
-        const linkConvertido = youtubeLink.replace("watch?v=", "embed/")
-        dispatch(agregaPublicacion({ comment: value, firstName, lastName, userID: auth, youtube: linkConvertido, image: imageLink }))
-        setValue("")
-    }
-
-    const youtubeSwitchHandler = () => {
-        setYoutube(!youtube)
-        setYoutubeLink('')
-    }
-
-    const imageSwitchHandler = () => {
-        setImage(!image)
-        setImageLink('')
+    const crearComentario = () => {
+        dispatch(agregaComentario({ userID, postID, comment: comentario })
+        )
     }
 
     return (
-        <Card className={classes.root}>
-            <CardHeader
-                avatar={
-                    <Avatar className={classes.avatarLarge} alt="avatar" src="https://picsum.photos/200/300"> </Avatar>
-                }
-                title={firstName + " " + lastName}
-            />
-            <CardContent>
-                <TextField
-                    className={classes.styledTextfield}
-                    size="small"
+        <>
+            <Divider variant="middle" />
+            <Box className={classes.root}>
+                <Button>
+                    <Avatar alt="Remy Sharp" src="https://picsum.photos/200/300" />
+                </Button>
+                <Input
+                    className={classes.inputText}
                     multiline
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
+                    placeholder='Leave a comment...'
+                    value={comentario}
+                    onChange={(e) => setComentario(e.target.value)}
                 />
-                <div>
-                    {youtube && <TextField placeholder="Youtube link" value={youtubeLink} onChange={(e) => setYoutubeLink(e.target.value)}></TextField>}
-                    {image && <TextField placeholder="Image link" value={imageLink} onChange={(e) => setImageLink(e.target.value)}></TextField>}
-                </div>
-
-            </CardContent>
-
-            <CardActions>
-
-                <IconButton onClick={youtubeSwitchHandler}>
-                    <YouTubeIcon color={youtube ? "primary" : "disabled"}></YouTubeIcon>
+                <IconButton onClick={crearComentario}>
+                    <Send />
                 </IconButton>
-
-                <IconButton onClick={imageSwitchHandler}>
-                    <InsertPhoto color={image ? "primary" : "disabled"} ></InsertPhoto>
-                </IconButton>
-
-                <Button variant="contained" color="primary" onClick={nuevaPublicacion}>Send</Button>
-            </CardActions>
-        </Card >
+            </Box>
+        </>
     )
 }
+
+
+
+
 
 export default CrearComentario

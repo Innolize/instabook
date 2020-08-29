@@ -1,5 +1,5 @@
 import React from 'react'
-import { Toolbar, AppBar, Typography, IconButton, Hidden } from '@material-ui/core'
+import { Toolbar, AppBar, Typography, Hidden } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux'
 import { BotonesLogeados } from './BotonesLogeados'
@@ -28,9 +28,6 @@ const Header = () => {
         <div>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton className={classes.menuButton} edge="start" color="inherit" aria-label="menu">
-
-                    </IconButton>
                     <Hidden mdUp >
                         <BotonMenuDesplegable></BotonMenuDesplegable>
                     </Hidden>

@@ -14,6 +14,9 @@ const appReducer = (state = initialState, { type, payload }) => {
         case "QUITAR_LIKE":
             console.log("QUITAR_LIKE")
             return state
+        case "AGREGAR_COMENTARIO":
+            console.log("COMENTARIO_AGREGADO")
+            return state
         default:
             return state
     }
