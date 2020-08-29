@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Card, CardContent, CardHeader, makeStyles, TextField, Button, CardActions, Avatar, Switch, Input } from '@material-ui/core'
+import { Card, CardContent, CardHeader, makeStyles, TextField, Button, CardActions, Avatar, Switch, Input, IconButton } from '@material-ui/core'
+import { InsertPhoto } from '@material-ui/icons'
+import YouTubeIcon from '@material-ui/icons/YouTube';
 import { agregaPublicacion } from '../../redux/actions/index'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -35,7 +37,8 @@ const CrearComentario = () => {
         return null
 
     const nuevaPublicacion = () => {
-        dispatch(agregaPublicacion({ comment: value, firstName, lastName, userID: auth, youtube }))
+        const linkConvertido = youtubeLink.replace("watch?v=", "embed/")
+        dispatch(agregaPublicacion({ comment: value, firstName, lastName, userID: auth, youtube: linkConvertido, image: imageLink }))
         setValue("")
     }
 
@@ -65,25 +68,23 @@ const CrearComentario = () => {
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                 />
-            </CardContent>
-            <div>
-                <Switch
-                    color="primary"
-                    checked={youtube}
-                    onChange={youtubeSwitchHandler}
-                />
-                {youtube && <Input placeholder="Youtube link" value={youtubeLink} onChange={(e) => setYoutubeLink(e.target.value)}></Input>}
-            </div>
-            <div>
-                <Switch
-                    color="secondary"
-                    checked={image}
-                    onChange={imageSwitchHandler}
+                <div>
+                    {youtube && <TextField placeholder="Youtube link" value={youtubeLink} onChange={(e) => setYoutubeLink(e.target.value)}></TextField>}
+                    {image && <TextField placeholder="Image link" value={imageLink} onChange={(e) => setImageLink(e.target.value)}></TextField>}
+                </div>
 
-                />
-                {image && <Input placeholder="Image link" value={imageLink} onChange={(e) => setImageLink(e.target.value)}></Input>}
-            </div>
+            </CardContent>
+
             <CardActions>
+
+                <IconButton onClick={youtubeSwitchHandler}>
+                    <YouTubeIcon color={youtube ? "primary" : "disabled"}></YouTubeIcon>
+                </IconButton>
+
+                <IconButton onClick={imageSwitchHandler}>
+                    <InsertPhoto color={image ? "primary" : "disabled"} ></InsertPhoto>
+                </IconButton>
+
                 <Button variant="contained" color="primary" onClick={nuevaPublicacion}>Send</Button>
             </CardActions>
         </Card >

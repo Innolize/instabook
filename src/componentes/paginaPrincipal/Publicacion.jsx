@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, CardContent, Typography, makeStyles, Avatar, IconButton, CardHeader, CardActions, Menu, MenuItem } from '@material-ui/core'
+import { Card, CardContent, Typography, makeStyles, Avatar, IconButton, CardHeader, CardActions, Menu, MenuItem, CardMedia } from '@material-ui/core'
 import { Share, FavoriteBorder, MoreVert, Favorite } from '@material-ui/icons'
 import { eliminaPublicacion, darLike, quitarLike } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,10 +8,12 @@ import { NavLink } from 'react-router-dom'
 
 const useStyle = makeStyles((theme) => ({
     root: {
-        minWidth: 480,
         display: "flex",
         flexDirection: "column",
         margin: "10px 0px 10px 0px",
+        [theme.breakpoints.up('lg')]: {
+            width: '100%'
+        },
     },
     avatarLarge: {
         width: theme.spacing(4),
@@ -20,7 +22,7 @@ const useStyle = makeStyles((theme) => ({
     tituloCarta: {
         flexGrow: '1',
     },
-    media: {
+    cardVideo: {
         height: 320,
         width: 480,
         display: "flex",
@@ -29,6 +31,10 @@ const useStyle = makeStyles((theme) => ({
     linkSinDecoracion: {
         textDecoration: 'none',
         color: 'black'
+    },
+    cardImage: {
+        height: 320,
+        backgroundSize: "contain"
     }
 }))
 
@@ -40,53 +46,57 @@ const Publicacion = ({ props }) => {
     const time = moment(new Date(props.date), 'YYYYMMDD').fromNow();
 
     return (
-        <div>
-            <Card className={classes.root}>
-                <CardHeader
-                    avatar={
-                        <NavLink to={`/profile/${props.userID}`}>
-                            <Avatar className={classes.avatarLarge} alt="avatar" src={props.avatar} />
-                        </NavLink>
-                    }
+        <Card className={classes.root}>
+            <CardHeader
+                avatar={
+                    <NavLink to={`/profile/${props.userID}`}>
+                        <Avatar className={classes.avatarLarge} alt="avatar" src={props.avatar} />
+                    </NavLink>
+                }
 
-                    title={
-                        <NavLink to={`/profile/${props.userID}`} className={classes.linkSinDecoracion}>
-                            <Typography variant="h6">{props.firstName + " " + props.lastName}</Typography>
-                        </NavLink>
-                    }
-                    subheader={time}
-                    action={currentUserID &&
-                        <Opciones
-                            postAuthor={props.userID}
-                            postID={props.id}
-                            currentUserID={currentUserID}
-                        ></Opciones>
-                    }
+                title={
+                    <NavLink to={`/profile/${props.userID}`} className={classes.linkSinDecoracion}>
+                        <Typography variant="h6">{props.firstName + " " + props.lastName}</Typography>
+                    </NavLink>
+                }
+                subheader={time}
+                action={currentUserID &&
+                    <Opciones
+                        postAuthor={props.userID}
+                        postID={props.id}
+                        currentUserID={currentUserID}
+                    ></Opciones>
+                }
 
-                />
-                <CardContent >
-                    <Typography variant="body1">
-                        {props.comment}
-                    </Typography>
-                </CardContent >
-                {/* <CardMedia
-                    className={classes.media}
-                    component="iframe"
-                    src={props.youtube}
-                    title="test"
-                /> */}
-                < CardActions >
-                    <IconButton onClick={userLike ? () => dispatch(quitarLike({ publicacionID: props.id, IDUsuario: currentUserID })) : () => dispatch(darLike({ publicacionID: props.id, IDUsuario: currentUserID }))}>
-                        {userLike ? <Favorite /> : <FavoriteBorder />}
-                    </IconButton>
-                    {props.likes.length > 0 ? props.likes.length : null}
-                    <IconButton>
-                        <Share></Share>
-                    </IconButton>
+            />
+            <CardContent >
+                <Typography variant="body1">
+                    {props.comment}
+                </Typography>
+            </CardContent >
+            {props.youtube && <CardMedia
+                className={classes.cardVideo}
+                component="iframe"
+                src={props.youtube}
+                title="test"
+            />}
+            {props.image && <CardMedia
+                className={classes.cardImage}
+                component='image'
+                image={"https://i.picsum.photos/id/401/200/400.jpg?hmac=mqbaQswuaRhN4kdxiidldM2DsH-ykG3TOqlyZO8ZlpY"}
+                title="test"
+            />}
+            < CardActions >
+                <IconButton onClick={userLike ? () => dispatch(quitarLike({ publicacionID: props.id, IDUsuario: currentUserID })) : () => dispatch(darLike({ publicacionID: props.id, IDUsuario: currentUserID }))}>
+                    {userLike ? <Favorite /> : <FavoriteBorder />}
+                </IconButton>
+                {props.likes.length > 0 ? props.likes.length : null}
+                <IconButton>
+                    <Share></Share>
+                </IconButton>
 1
                 </CardActions >
-            </Card >
-        </div >
+        </Card >
     )
 }
 

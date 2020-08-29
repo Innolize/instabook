@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('lg')]: {
             width: '100%'
         },
-
     },
     media: {
         height: 300,
@@ -32,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
     contenedor: {
         minWidth: 480,
-        minHeight: 320,
+        minHeight: 250,
         backgroundColor: 'gray'
     },
     spinnerContainer: {

@@ -6,10 +6,17 @@ import Publicacion from './Publicacion'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        minWidth: 480,
+        width: 480,
+        minHeight: 400,
         display: "flex",
         flexDirection: "column",
-        margin: "10px 0px 10px 0px",
+        marginTop: "10px",
+        marginBotton: "10px",
+        paddingTop: "15px",
+        paddingBottom: "15px",
+        [theme.breakpoints.up('lg')]: {
+            width: '100%'
+        },
     },
     spinnerContainer: {
         display: 'flex',
@@ -24,19 +31,21 @@ const ListaPublicaciones = ({ objeto }) => {
     useFirestoreConnect([
         objeto
     ])
-    
+
     const publicaciones = useSelector((state) => state.firestore.ordered.publicaciones)
 
     if (!isLoaded(publicaciones)) {
-        return <div className={classes.spinnerContainer}><CircularProgress className={classes.root}>loading...</CircularProgress></div>
+        return <div className={classes.spinnerContainer}><CircularProgress>loading...</CircularProgress></div>
     }
 
     if (isEmpty(publicaciones)) {
         return null
     }
-    
+
     return (
-        publicaciones.map((publicacion) => <Publicacion props={publicacion} key={publicacion.id} />)
+        <div className={classes.root}>
+            {publicaciones.map((publicacion) => <Publicacion props={publicacion} key={publicacion.id} />)}
+        </div>
     )
 }
 
