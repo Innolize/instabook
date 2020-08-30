@@ -33,7 +33,7 @@ const ListaPublicaciones = ({ objeto }) => {
     ])
 
     const publicaciones = useSelector((state) => state.firestore.ordered.publicaciones)
-
+    console.log(publicaciones)
     if (!isLoaded(publicaciones)) {
         return <div className={classes.spinnerContainer}><CircularProgress>loading...</CircularProgress></div>
     }
@@ -44,7 +44,7 @@ const ListaPublicaciones = ({ objeto }) => {
 
     return (
         <div className={classes.root}>
-            {publicaciones.map((publicacion) => <Publicacion props={publicacion} key={publicacion.id} />)}
+            {publicaciones && publicaciones.map((publicacion) => <Publicacion props={publicacion} key={publicacion.id} />)}
         </div>
     )
 }

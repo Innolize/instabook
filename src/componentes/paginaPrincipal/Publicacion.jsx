@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Card, CardContent, Typography, makeStyles, Avatar, IconButton, CardHeader, CardActions, Menu, MenuItem, CardMedia } from '@material-ui/core'
+import { Card, CardContent, Typography, makeStyles, Avatar, IconButton, CardHeader, CardActions, Menu, MenuItem, CardMedia, Divider } from '@material-ui/core'
 import { Share, FavoriteBorder, MoreVert, Favorite } from '@material-ui/icons'
 import { eliminaPublicacion, darLike, quitarLike } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 import { NavLink } from 'react-router-dom'
 import CrearComentario from './CrearComentario'
+import ListaComentarios from './ListaComentarios'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -97,11 +98,13 @@ const Publicacion = ({ props }) => {
                     </IconButton>
 1
                 </CardActions >
-                <CrearComentario
+
+                <Divider variant="middle" ></Divider>
+
+                <ListaComentarios
                     userID={props.userID}
                     postID={props.id}
-                />
-
+                ></ListaComentarios>
             </Card >
         </>
     )

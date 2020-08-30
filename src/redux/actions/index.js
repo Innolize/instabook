@@ -93,10 +93,6 @@ export const subirImagen = (payload) => {
 
 export const agregaComentario = (payload) => {
     const { postID, userID, comment } = payload
-    console.log('postID', postID)
-    console.log('userID', userID)
-    console.log(comment)
-    debugger
     return async (dispatch, getState, { getFirebase, getFirestore }) => {
 
         try {
@@ -117,5 +113,41 @@ export const agregaComentario = (payload) => {
             console.log(error)
         }
 
+    }
+}
+
+export const darLikeComentario = (payload) => {
+    const { postID, userID, commentID } = payload
+    return async (dispatch, getState, { getFirebase, getFirestore }) => {
+        try {
+            debugger
+            const firestore = await getFirestore()
+            const doc = firestore.collection("publicaciones").doc(postID).collection('comentarios').doc(commentID)
+            debugger
+            doc.update({
+                likes: firestore.FieldValue.arrayUnion(userID)
+            })
+            dispatch({ type: "DAR_LIKE_COMENTARIO" })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export const quitarLikeComentario = (payload) => {
+    const { postID, userID, commentID } = payload
+    return async (dispatch, getState, { getFirebase, getFirestore }) => {
+        try {
+            debugger
+            const firestore = await getFirestore()
+            const doc = firestore.collection("publicaciones").doc(postID).collection('comentarios').doc(commentID)
+            debugger
+            doc.update({
+                likes: firestore.FieldValue.arrayRemove(userID)
+            })
+            dispatch({ type: "QUITAR_LIKE_COMENTARIO" })
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
