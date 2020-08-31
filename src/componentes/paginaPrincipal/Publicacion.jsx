@@ -5,7 +5,6 @@ import { eliminaPublicacion, darLike, quitarLike } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 import { NavLink } from 'react-router-dom'
-import CrearComentario from './CrearComentario'
 import ListaComentarios from './ListaComentarios'
 
 const useStyle = makeStyles((theme) => ({
@@ -40,10 +39,12 @@ const useStyle = makeStyles((theme) => ({
     }
 }))
 
-const Publicacion = ({ props }) => {
+export const Publicacion = ({ props }) => {
+    const { userID } = props
     const dispatch = useDispatch()
     const currentUserID = useSelector(state => state.firebase.auth.uid)
     const userLike = props.likes.includes(currentUserID)
+    const selfpost = (currentUserID === userID)
     const classes = useStyle()
     const time = moment(new Date(props.date), 'YYYYMMDD').fromNow();
 
@@ -65,9 +66,9 @@ const Publicacion = ({ props }) => {
                     subheader={time}
                     action={currentUserID &&
                         <Opciones
-                            postAuthor={props.userID}
-                            postID={props.id}
-                            currentUserID={currentUserID}
+                            self={selfpost}
+                            payload={props.id}
+                            callbackAction={eliminaPublicacion}
                         ></Opciones>
                     }
 
@@ -110,8 +111,7 @@ const Publicacion = ({ props }) => {
     )
 }
 
-const Opciones = ({ postAuthor, postID, currentUserID }) => {
-    const selfpost = (currentUserID === postAuthor)
+export const Opciones = ({ self, payload, callbackAction = () => { } }) => {
     const dispatch = useDispatch()
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -135,14 +135,10 @@ const Opciones = ({ postAuthor, postID, currentUserID }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                {selfpost && <MenuItem onClick={() => dispatch(eliminaPublicacion(postID))}>Remove</MenuItem>}
+                {self && <MenuItem onClick={() => dispatch(callbackAction(payload))}>Remove</MenuItem>}
                 <MenuItem onClick={handleClose}>Unfollow User</MenuItem>
                 <MenuItem onClick={handleClose}>Report</MenuItem>
             </Menu>
         </div>
     );
 }
-
-
-
-export default Publicacion

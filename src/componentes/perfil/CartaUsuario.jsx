@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles, Card, CardContent, Typography, Container, CircularProgress, Input, Button } from '@material-ui/core'
+import { makeStyles, Card, CardContent, Typography, Container, CircularProgress } from '@material-ui/core'
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'

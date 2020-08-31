@@ -1,8 +1,8 @@
 import React from 'react'
-import { useFirestoreConnect, isLoaded, isEmpty, useFirebase } from 'react-redux-firebase'
+import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import { useSelector } from 'react-redux'
 import { CircularProgress, makeStyles } from '@material-ui/core'
-import Publicacion from './Publicacion'
+import { Publicacion } from './Publicacion'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,7 +33,7 @@ const ListaPublicaciones = ({ objeto }) => {
     ])
 
     const publicaciones = useSelector((state) => state.firestore.ordered.publicaciones)
-    console.log(publicaciones)
+
     if (!isLoaded(publicaciones)) {
         return <div className={classes.spinnerContainer}><CircularProgress>loading...</CircularProgress></div>
     }

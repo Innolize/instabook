@@ -3,7 +3,6 @@ import { Avatar, Input, Box, makeStyles, Button, IconButton, Divider } from '@ma
 import { Send } from '@material-ui/icons'
 import { useDispatch } from 'react-redux'
 import { agregaComentario } from '../../redux/actions/index.js'
-import MuestraComentario from './MuestraComentario.jsx'
 
 const useStyles = makeStyles({
     root: {
@@ -17,7 +16,6 @@ const useStyles = makeStyles({
 
 
 const CrearComentario = ({ props }) => {
-    console.log(props)
     const classes = useStyles()
     const dispatch = useDispatch()
     const [comentario, setComentario] = useState("")

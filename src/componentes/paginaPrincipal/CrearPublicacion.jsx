@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, CardContent, CardHeader, makeStyles, TextField, Button, CardActions, Avatar, Switch, Input, IconButton } from '@material-ui/core'
+import { Card, CardContent, CardHeader, makeStyles, TextField, Button, CardActions, Avatar, IconButton } from '@material-ui/core'
 import { InsertPhoto } from '@material-ui/icons'
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import { agregaPublicacion } from '../../redux/actions/index'
@@ -40,6 +40,8 @@ const CrearPublicacion = () => {
         const linkConvertido = youtubeLink.replace("watch?v=", "embed/")
         dispatch(agregaPublicacion({ comment: value, firstName, lastName, userID: auth, youtube: linkConvertido, image: imageLink }))
         setValue("")
+        setYoutubeLink("")
+        setImageLink("")
     }
 
     const youtubeSwitchHandler = () => {

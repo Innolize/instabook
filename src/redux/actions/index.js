@@ -92,7 +92,7 @@ export const subirImagen = (payload) => {
 };
 
 export const agregaComentario = (payload) => {
-    const { postID, userID, comment } = payload
+    const { postID } = payload
     return async (dispatch, getState, { getFirebase, getFirestore }) => {
 
         try {
@@ -149,5 +149,24 @@ export const quitarLikeComentario = (payload) => {
         } catch (error) {
             console.log(error)
         }
+    }
+}
+
+export const eliminarComentario = (payload) => {
+    const { postID, commentID } = payload
+    return async (dispatch, getState, { getFirebase, getFirestore }) => {
+
+        try {
+            const firestore = getFirestore();
+            await firestore.collection("publicaciones").doc(postID).collection('comentarios').doc(commentID).delete()
+
+            dispatch({
+                type: "ELIMINA_COMENTARIO",
+                payload
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 }

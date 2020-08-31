@@ -1,11 +1,10 @@
 import React from 'react'
 import CrearComentario from './CrearComentario'
-import Comentario from './MuestraComentario'
+import Comentario from './Comentario'
 import { useFirestoreConnect } from 'react-redux-firebase'
 import { useSelector } from 'react-redux'
 
 const ListaComentarios = (props) => {
-    console.log(props)
     const userID = props.userID
     const postID = props.postID
 

@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { Typography, Input, Button } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import { subirImagen } from '../../redux/actions'
-import { useFirebase } from 'react-redux-firebase'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 
 
@@ -11,7 +10,6 @@ const NoAvatar = () => {
     const { userID } = useParams()
     const dispatch = useDispatch()
     const [imagen, setImagen] = useState(null)
-    console.log(imagen)
 
 
     return (
