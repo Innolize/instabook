@@ -15,7 +15,6 @@ const ListaComentarios = (props) => {
     }]);
 
     const comentarios = useSelector(state => state.firestore.ordered[`publicacion_${postID}_comentarios`])
-
     return (
         <div>
             {comentarios && comentarios.map((x, i) => <Comentario key={i} props={x}></Comentario>)}

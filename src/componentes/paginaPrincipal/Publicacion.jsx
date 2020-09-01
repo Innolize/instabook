@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 import { NavLink } from 'react-router-dom'
 import ListaComentarios from './ListaComentarios'
+import { isLoaded } from 'react-redux-firebase'
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -43,10 +44,18 @@ export const Publicacion = ({ props }) => {
     const { userID } = props
     const dispatch = useDispatch()
     const currentUserID = useSelector(state => state.firebase.auth.uid)
+    const users = useSelector(state => state.firestore.data.usuarios)
+
     const userLike = props.likes.includes(currentUserID)
     const selfpost = (currentUserID === userID)
     const classes = useStyle()
     const time = moment(new Date(props.date), 'YYYYMMDD').fromNow();
+
+    if (!isLoaded(users)) {
+        return <div>loading...</div>
+    }
+
+    const authorPost = users[userID]
 
     return (
         <>
@@ -54,13 +63,13 @@ export const Publicacion = ({ props }) => {
                 <CardHeader
                     avatar={
                         <NavLink to={`/profile/${props.userID}`}>
-                            <Avatar className={classes.avatarLarge} alt="avatar" src={props.avatar} />
+                            <Avatar className={classes.avatarLarge} alt="avatar" src={authorPost.avatar} />
                         </NavLink>
                     }
 
                     title={
                         <NavLink to={`/profile/${props.userID}`} className={classes.linkSinDecoracion}>
-                            <Typography variant="h6">{props.firstName + " " + props.lastName}</Typography>
+                            <Typography variant="h6">{authorPost.firstName + " " + authorPost.lastName}</Typography>
                         </NavLink>
                     }
                     subheader={time}

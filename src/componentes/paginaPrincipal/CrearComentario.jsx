@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Avatar, Input, Box, makeStyles, Button, IconButton, Divider } from '@material-ui/core'
 import { Send } from '@material-ui/icons'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { agregaComentario } from '../../redux/actions/index.js'
+import { isLoaded } from 'react-redux-firebase'
 
 const useStyles = makeStyles({
     root: {
@@ -26,12 +27,25 @@ const CrearComentario = ({ props }) => {
         setComentario("")
     }
 
+    const userID = useSelector(state => state.firebase.auth.uid)
+    const users = useSelector(state => state.firestore.data.usuarios)
+
+    if (!userID) {
+        return null
+    }
+
+    if (!isLoaded(users)) {
+        return <div>loading...</div>
+    }
+    const currentUser = users[userID]
+
+
     return (
         <>
             <Divider variant="middle" />
             <Box className={classes.root}>
                 <Button>
-                    <Avatar alt="Remy Sharp" src="https://picsum.photos/200/300" />
+                    <Avatar alt="Remy Sharp" src={currentUser.avatar} />
                 </Button>
                 <Input
                     className={classes.inputText}

@@ -80,7 +80,8 @@ export const subirImagen = (payload) => {
             const pathReference = storage.ref(referencia);
             const imagenURL = await pathReference.getDownloadURL()
             firestore.collection("usuarios").doc(userID).update({
-                avatar: imagenURL
+                avatar: imagenURL,
+                imageLocation: referencia
             })
 
             debugger
@@ -117,10 +118,11 @@ export const agregaComentario = (payload) => {
 }
 
 export const darLikeComentario = (payload) => {
+    debugger
     const { postID, userID, commentID } = payload
     return async (dispatch, getState, { getFirebase, getFirestore }) => {
         try {
-            debugger
+
             const firestore = await getFirestore()
             const doc = firestore.collection("publicaciones").doc(postID).collection('comentarios').doc(commentID)
             debugger
@@ -166,6 +168,48 @@ export const eliminarComentario = (payload) => {
             })
         } catch (error) {
             console.log(error)
+        }
+
+    }
+}
+
+export const actualizarPerfilCompleto = (payload) => {
+    const { info, image, oldPathImage } = payload
+    const { userID } = info
+    return async (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firebase = getFirebase();
+        const firestore = getFirestore()
+        const imagesPath = "perfil";
+
+        try {
+            debugger
+            if (image) {
+                debugger
+                const respuesta = await firebase.uploadFile(imagesPath, image)
+                const referencia = respuesta.uploadTaskSnapshot.ref.location.path_
+                const storage = firebase.storage();
+                const pathReference = storage.ref(referencia);
+                const imageURL = await pathReference.getDownloadURL()
+
+                firestore.collection("usuarios").doc(userID).update({
+                    ...info,
+                    avatar: imageURL,
+                    imageLocation: referencia
+                })
+                debugger
+                firebase.deleteFile(oldPathImage)
+                console.log("exito!")
+                dispatch({ type: "PROFILE_UPDATE_WITH_IMAGE" });
+            } else {
+                debugger
+                firestore.collection("usuarios").doc(userID).update({
+                    ...info,
+                })
+                dispatch({ type: "PROFILE_UPDATE_W/O_IMAGE" });
+            }
+
+        } catch (error) {
+            console.log("upload error: ", error)
         }
 
     }

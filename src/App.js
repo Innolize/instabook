@@ -5,6 +5,7 @@ import IniciarSesion from './componentes/iniciarSesion/IniciarSesion'
 import CrearCuenta from './componentes/iniciarSesion/CrearCuenta'
 import Profile from './componentes/perfil/index'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import EditProfile from './componentes/perfil/EditProfile';
 
 function App() {
 
@@ -23,6 +24,9 @@ function App() {
         </Route>
         <Route path="/profile/:userID">
           <Profile />
+        </Route>
+        <Route path="/editprofile">
+          <EditProfile />
         </Route>
       </Router>
     </div >

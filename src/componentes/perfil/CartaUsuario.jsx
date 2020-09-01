@@ -1,10 +1,10 @@
 import React from 'react'
-import { makeStyles, Card, CardContent, Typography, Container, CircularProgress } from '@material-ui/core'
+import { makeStyles, Card, CardContent, Typography, Container, CircularProgress} from '@material-ui/core'
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import NoAvatar from './NoAvatar'
-// import moduleName from 'react-router-firestore'
+import Avatar from './Avatar'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,12 +40,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         height: '400px'
     },
-    avatar: {
-        maxWidth: 480,
-        [theme.breakpoints.up('lg')]: {
-            maxWidth: '100%'
-        },
-    }
+
 }))
 
 const Perfil = () => {
@@ -57,7 +52,10 @@ const Perfil = () => {
     })
 
     const user = useSelector(state => state.firestore.data.usuarios[userID])
-
+    const test = useSelector(state => state.firestore.data.usuarios)
+    const test2 = useSelector(state => state.firebase.auth.uid)
+    console.log("usuarios: " + test)
+    console.log("logeado: " + test2)
     if (!isLoaded(user))
         return <CircularProgress className={classes.spinnerContainer}>loading...</CircularProgress>
 
@@ -65,7 +63,8 @@ const Perfil = () => {
     return (
         <Card className={classes.root}>
             <Container className={classes.contenedor}>
-                {user.avatar ? <img className={classes.avatar} alt={user.avatar} src={user.avatar} /> : <NoAvatar></NoAvatar>}
+                {user.avatar ?
+                    <Avatar avatar={user.avatar} /> : <NoAvatar />}
             </Container>
             <CardContent>
                 <Typography align="center" variant="h3">{user.firstName + " " + user.lastName}</Typography>

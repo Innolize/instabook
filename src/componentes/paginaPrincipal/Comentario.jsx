@@ -44,11 +44,11 @@ const Comentario = ({ props }) => {
 
 
     const darLike = () => {
-        dispatch(darLikeComentario({ userID, postID, commentID: id }))
+        dispatch(darLikeComentario({ userID: userLogged, postID, commentID: id }))
     }
 
     const quitarLike = () => {
-        dispatch(quitarLikeComentario({ userID, postID, commentID: id }))
+        dispatch(quitarLikeComentario({ userID: userLogged, postID, commentID: id }))
     }
 
     return (
@@ -61,7 +61,7 @@ const Comentario = ({ props }) => {
                     className={classes.cardHeader}
                     avatar={<Avatar aria-label="recipe" className={classes.avatar} src={commentAuthor.avatar} />
                     }
-                    action={showOptions &&
+                    action={showOptions && userLogged &&
                         <Opciones
                             self={selfComment}
                             payload={{ postID, commentID: id }}
@@ -76,7 +76,7 @@ const Comentario = ({ props }) => {
                     </Typography>
                 </CardContent>
                 <Box display='flex' justifyContent='space-around'>
-                    <IconButton onClick={userLike ? quitarLike : darLike}>
+                    <IconButton onClick={userLogged ? (userLike ? quitarLike : darLike) : () => { }}>
                         <ThumbUp color={userLike ? 'primary' : 'inherit'} />
                         {likes.length > 0 ? likes.length : null}
                     </IconButton>
