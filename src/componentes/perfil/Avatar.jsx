@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Fab, makeStyles } from '@material-ui/core'
 import { Edit } from '@material-ui/icons'
 import { Link, useParams } from 'react-router-dom'
@@ -31,10 +31,14 @@ const Avatar = ({ avatar }) => {
     const { userID } = useParams()
     const currentUserID = useSelector(state => state.firebase.auth.uid)
     const ownProfile = (userID === currentUserID)
+    const [showEdit, setShowEdit] = useState(false)
 
     return (
-        <Box className={classes.avatarContainer}>
-            {ownProfile && <Fab className={classes.fab} color="secondary" aria-label="edit" >
+        <Box className={classes.avatarContainer}
+            onMouseEnter={() => setShowEdit(true)}
+            onMouseLeave={() => setShowEdit(false)}
+        >
+            {ownProfile && showEdit && <Fab className={classes.fab} color="secondary" aria-label="edit" >
                 <Link to="/editprofile">
                     <Edit />
                 </Link>
