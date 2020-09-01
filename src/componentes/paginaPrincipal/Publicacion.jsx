@@ -56,7 +56,7 @@ export const Publicacion = ({ props }) => {
     if (!isLoaded(users)) {
         return <div>loading...</div>
     }
-    
+
     const authorPost = users[userID]
 
     return (
@@ -102,7 +102,7 @@ export const Publicacion = ({ props }) => {
                 />}
                 < CardActions >
                     <IconButton onClick={userLike ? () => dispatch(quitarLike({ publicacionID: props.id, IDUsuario: currentUserID })) : () => dispatch(darLike({ publicacionID: props.id, IDUsuario: currentUserID }))}>
-                        {userLike ? <Favorite /> : <FavoriteBorder />}
+                        {userLike ? <Favorite color="secondary" /> : <FavoriteBorder />}
                     </IconButton>
                     {props.likes.length > 0 ? props.likes.length : null}
                     <IconButton>

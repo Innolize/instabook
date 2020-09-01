@@ -6,6 +6,8 @@ import NoAvatar from '../perfil/NoAvatar'
 import { useSelector, useDispatch } from 'react-redux'
 import { actualizarPerfilCompleto } from '../../redux/actions'
 import { green } from '@material-ui/core/colors';
+import { useHistory } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EditProfile = () => {
     const classes = useStyles()
+    const history = useHistory()
     const dispatch = useDispatch()
 
     const useFormInput = (initialValue) => {
@@ -57,7 +60,7 @@ const EditProfile = () => {
 
     const user = users[loggedUser]
     console.log(user)
-    const description = useFormInput(user.descripcion)
+    const description = useFormInput(user.description)
     const firstName = useFormInput(user.firstName)
     const lastName = useFormInput(user.lastName)
     const [newImage, setNewImage] = useState("")
@@ -71,6 +74,7 @@ const EditProfile = () => {
 
     const updateProfile = () => {
         dispatch(actualizarPerfilCompleto({ info, image: newImage, oldPathImage: user["imageLocation"] }))
+        history.push(`/profile/${loggedUser}`)
     }
 
     return (
