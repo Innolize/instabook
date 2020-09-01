@@ -1,21 +1,35 @@
 import React, { useState } from 'react'
-import { Card, CardContent, CardHeader, makeStyles, TextField, Button, CardActions, Avatar, IconButton } from '@material-ui/core'
+import { Card, CardContent, CardHeader, makeStyles, TextField, Button, CardActions, Avatar, IconButton, CircularProgress, Box, Typography } from '@material-ui/core'
 import { InsertPhoto } from '@material-ui/icons'
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import { agregaPublicacion } from '../../redux/actions/index'
 import { useDispatch, useSelector } from 'react-redux'
+import { isLoaded } from 'react-redux-firebase';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        minWidth: 480,
-        width: '100%',
-        marginTop: '15px'
+        width: 480,
+        display: "flex",
+        flexDirection: "column",
+        marginTop: "10px",
+        marginBotton: "10px",
+        paddingTop: "15px",
+        paddingBottom: "15px",
+        [theme.breakpoints.up('lg')]: {
+            width: '100%'
+        },
     },
     cardContainer: {
         height: 300,
     },
     styledTextfield: {
         width: '100%',
+    },
+    spinnerContainer: {
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: 'center',
+        height: 300
     }
 }))
 
@@ -26,22 +40,29 @@ const CrearPublicacion = () => {
     const [youtubeLink, setYoutubeLink] = useState('')
     const [imageLink, setImageLink] = useState('')
 
-    const firstName = useSelector(state => state.firebase.profile.firstName)
-    const lastName = useSelector(state => state.firebase.profile.lastName)
-    const auth = useSelector(state => state.firebase.auth.uid)
+    const usuarios = useSelector(state => state.firestore.data.usuarios)
+    const userID = useSelector(state => state.firebase.auth.uid)
 
     const classes = useStyles()
     const dispatch = useDispatch()
 
-    if (!auth)
+    if (!userID)
         return null
 
+    if (!isLoaded(usuarios)) {
+        return <div className={classes.spinnerContainer}><CircularProgress>loading...</CircularProgress></div>
+    }
+
+    const usuario = usuarios[userID]
+    const { firstName, lastName, avatar } = usuario
     const nuevaPublicacion = () => {
         const linkConvertido = youtubeLink.replace("watch?v=", "embed/")
-        dispatch(agregaPublicacion({ comment: value, firstName, lastName, userID: auth, youtube: linkConvertido, image: imageLink }))
+        dispatch(agregaPublicacion({ comment: value, firstName, lastName, userID, youtube: linkConvertido, image: imageLink }))
         setValue("")
         setYoutubeLink("")
         setImageLink("")
+        setYoutube(false)
+        setImage(false)
     }
 
     const youtubeSwitchHandler = () => {
@@ -58,9 +79,10 @@ const CrearPublicacion = () => {
         <Card className={classes.root}>
             <CardHeader
                 avatar={
-                    <Avatar className={classes.avatarLarge} alt="avatar" src="https://picsum.photos/200/300"> </Avatar>
+                    <Avatar className={classes.avatarLarge} alt="avatar" src={avatar}> </Avatar>
                 }
-                title={firstName + " " + lastName}
+                title={
+                    <Typography variant="h5"> {firstName + " " + lastName}</Typography>}
             />
             <CardContent>
                 <TextField
@@ -77,15 +99,15 @@ const CrearPublicacion = () => {
             </CardContent>
 
             <CardActions>
+                <Box display="flex" flexGrow="1">
+                    <IconButton onClick={youtubeSwitchHandler}>
+                        <YouTubeIcon color={youtube ? "primary" : "disabled"}></YouTubeIcon>
+                    </IconButton>
 
-                <IconButton onClick={youtubeSwitchHandler}>
-                    <YouTubeIcon color={youtube ? "primary" : "disabled"}></YouTubeIcon>
-                </IconButton>
-
-                <IconButton onClick={imageSwitchHandler}>
-                    <InsertPhoto color={image ? "primary" : "disabled"} ></InsertPhoto>
-                </IconButton>
-
+                    <IconButton onClick={imageSwitchHandler}>
+                        <InsertPhoto color={image ? "primary" : "disabled"} ></InsertPhoto>
+                    </IconButton>
+                </Box>
                 <Button variant="contained" color="primary" onClick={nuevaPublicacion}>Send</Button>
             </CardActions>
         </Card >

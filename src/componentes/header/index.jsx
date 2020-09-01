@@ -17,30 +17,32 @@ const useStyles = makeStyles((theme) => ({
     link: {
         textDecoration: 'none',
         color: "white"
-    }
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+    },
 }))
 
 const Header = () => {
     const auth = useSelector(state => state.firebase.auth.uid)
-
     const classes = useStyles()
     return (
-        <div>
-            <AppBar position="static">
-                <Toolbar>
-                    <Hidden mdUp >
-                        <BotonMenuDesplegable></BotonMenuDesplegable>
-                    </Hidden>
-                    <Typography variant="h6" className={classes.title}>
-                        <Link className={classes.link} to="/">
-                            InstaBook
-                        </Link>
-                    </Typography>
 
-                    {auth ? <BotonesLogeados /> : <BotonesSinLogear />}
-                </Toolbar>
-            </AppBar>
-        </div>
+        <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar>
+                <Hidden mdUp >
+                    <BotonMenuDesplegable></BotonMenuDesplegable>
+                </Hidden>
+                <Typography variant="h6" className={classes.title}>
+                    <Link className={classes.link} to="/">
+                        InstaBook
+                        </Link>
+                </Typography>
+
+                {auth ? <BotonesLogeados /> : <BotonesSinLogear />}
+            </Toolbar>
+        </AppBar>
+
     )
 }
 export default Header

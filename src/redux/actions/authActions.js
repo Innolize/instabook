@@ -41,8 +41,8 @@ export const createAccount = (payload) => {
                 firstName,
                 lastName,
                 email,
-                avatar: null,
-                descripcion: ""
+                avatar: '',
+                description: ""
             })
             dispatch({ type: "USER_CREATED" })
         } catch (error) {

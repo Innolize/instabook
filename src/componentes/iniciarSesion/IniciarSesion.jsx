@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import { useSelector, useDispatch } from 'react-redux'
 import { signIn } from '../../redux/actions/authActions'
 import { Redirect } from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert'
 
 function Copyright() {
     return (
@@ -107,7 +108,7 @@ const SignIn = () => {
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
                     />
-                    {auth.authError && <p>{auth.authError}</p>}
+                    {auth.authError && <Alert severity="error">{auth.authError}</Alert>}
                     <Button
                         type="button"
                         fullWidth
@@ -120,11 +121,6 @@ const SignIn = () => {
           </Button>
 
                     <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-              </Link>
-                        </Grid>
                         <Grid item>
                             <Link href="#" variant="body2">
                                 {"Don't have an account? Sign Up"}

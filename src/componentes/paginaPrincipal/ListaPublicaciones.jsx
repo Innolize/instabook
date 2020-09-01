@@ -1,8 +1,9 @@
 import React from 'react'
-import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
+import { isLoaded, isEmpty } from 'react-redux-firebase'
 import { useSelector } from 'react-redux'
 import { CircularProgress, makeStyles } from '@material-ui/core'
 import { Publicacion } from './Publicacion'
+import { useParams } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,13 +27,17 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ListaPublicaciones = ({ objeto }) => {
+const ListaPublicaciones = () => {
+    const { userID } = useParams()
+    let busquedaEspecifica
+    if (userID) {
+        busquedaEspecifica = `publicacionesPerfil`
+    } else {
+        busquedaEspecifica = `publicaciones`
+    }
     const classes = useStyles()
-    useFirestoreConnect([
-        objeto
-    ])
 
-    const publicaciones = useSelector((state) => state.firestore.ordered.publicaciones)
+    const publicaciones = useSelector((state) => state.firestore.ordered[busquedaEspecifica])
 
     if (!isLoaded(publicaciones)) {
         return <div className={classes.spinnerContainer}><CircularProgress>loading...</CircularProgress></div>

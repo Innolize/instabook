@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { Card, Container, CardContent, makeStyles, TextField, Button } from '@material-ui/core'
-import Avatar from './Avatar'
-import NoAvatar from './NoAvatar'
+import { Card, Container, CardContent, makeStyles, TextField, Button, Box } from '@material-ui/core'
+import ImageIcon from '@material-ui/icons/Image';
+import Avatar from '../perfil/Avatar'
+import NoAvatar from '../perfil/NoAvatar'
 import { useSelector, useDispatch } from 'react-redux'
 import { actualizarPerfilCompleto } from '../../redux/actions'
+import { green } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     input: {
         display: 'none',
     },
+    infoUser: {
+        paddingTop: 15
+    }
 }))
 
 const EditProfile = () => {
@@ -82,18 +87,22 @@ const EditProfile = () => {
                     onChange={(e) => setNewImage(e.target.files[0])}
                 >
                 </input>
-                <label htmlFor="input-image">
-                    <Button variant="contained" color="primary" component="span" >
-                        New profile pic
-                        </Button>
-                </label>
-                <Button color="primary" onClick={updateProfile}> UPDATE!</Button>
-
+                <Box display="flex" justifyContent="space-around">
+                    <Box display="flex" alignItems="center">
+                        <label htmlFor="input-image">
+                            <Button variant="contained" color="primary" component="span" >
+                                New profile pic
+                            </Button>
+                        </label>
+                        {newImage && <ImageIcon style={{ color: green[500], paddingLeft: 10, fontSize: 40 }} />}
+                    </Box>
+                    <Button color="primary" onClick={updateProfile}> UPDATE!</Button>
+                </Box>
             </Container>
             <CardContent>
-                <TextField id="textfield-firstName" label="First name" variant="outlined" {...firstName} />
-                <TextField id="textField-lastName" label="Last name" variant="outlined" {...lastName} />
-                <TextField fullWidth multiline id="outlined-basic" label="description" variant="outlined" {...description} />
+                <TextField margin='dense' id="textfield-firstName" label="First name" variant="outlined" {...firstName} />
+                <TextField margin='dense' id="textField-lastName" label="Last name" variant="outlined" {...lastName} />
+                <TextField margin='dense' fullWidth multiline id="outlined-basic" label="description" variant="outlined" {...description} />
 
             </CardContent>
         </Card >

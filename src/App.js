@@ -5,9 +5,17 @@ import IniciarSesion from './componentes/iniciarSesion/IniciarSesion'
 import CrearCuenta from './componentes/iniciarSesion/CrearCuenta'
 import Profile from './componentes/perfil/index'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import EditProfile from './componentes/perfil/EditProfile';
+import EditProfile from './componentes/editarPerfil';
+import { useFirestoreConnect } from 'react-redux-firebase';
 
 function App() {
+
+  useFirestoreConnect(['usuarios'])
+  useFirestoreConnect({
+    collection: "publicaciones",
+    orderBy: ['date', 'desc']
+  })
+
 
   return (
     <div className="App" style={{ backgroundColor: 'gray' }}>

@@ -1,9 +1,8 @@
 import React from 'react'
-import { makeStyles, Card, CardContent, Typography, Container, CircularProgress} from '@material-ui/core'
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase'
+import { makeStyles, Card, CardContent, Typography, Container, CircularProgress } from '@material-ui/core'
+import { isLoaded } from 'react-redux-firebase'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import NoAvatar from './NoAvatar'
 import Avatar from './Avatar'
 
 
@@ -46,29 +45,23 @@ const useStyles = makeStyles((theme) => ({
 const Perfil = () => {
     const { userID } = useParams()
     const classes = useStyles()
-    useFirestoreConnect({
-        collection: "usuarios",
-        doc: userID
-    })
 
-    const user = useSelector(state => state.firestore.data.usuarios[userID])
-    const test = useSelector(state => state.firestore.data.usuarios)
-    const test2 = useSelector(state => state.firebase.auth.uid)
-    console.log("usuarios: " + test)
-    console.log("logeado: " + test2)
-    if (!isLoaded(user))
+    const usuarios = useSelector(state => state.firestore.data.usuarios)
+
+    if (!isLoaded(usuarios))
         return <CircularProgress className={classes.spinnerContainer}>loading...</CircularProgress>
+
+    const usuario = usuarios[userID]
 
 
     return (
         <Card className={classes.root}>
             <Container className={classes.contenedor}>
-                {user.avatar ?
-                    <Avatar avatar={user.avatar} /> : <NoAvatar />}
+                <Avatar avatar={usuario.avatar} />
             </Container>
             <CardContent>
-                <Typography align="center" variant="h3">{user.firstName + " " + user.lastName}</Typography>
-                <Typography variant="body1">{user.descripcion}</Typography>
+                <Typography align="center" variant="h3">{usuario.firstName + " " + usuario.lastName}</Typography>
+                <Typography variant="body1">{usuario.description}</Typography>
             </CardContent>
         </Card>
     )

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Box, Fab, makeStyles } from '@material-ui/core'
 import { Edit } from '@material-ui/icons'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
@@ -14,21 +15,32 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
     },
     avatarContainer: {
+        minHeight: 400,
         display: "flex",
-        justifyContent: "flex-end"
+        justifyContent: "center",
+    },
+    noAvatar: {
+        alignSelf: "center",
+        fontSize: "25px",
+        fontWeight: "bold"
     }
 }))
 
 const Avatar = ({ avatar }) => {
     const classes = useStyles()
+    const { userID } = useParams()
+    const currentUserID = useSelector(state => state.firebase.auth.uid)
+    const ownProfile = (userID === currentUserID)
+
     return (
         <Box className={classes.avatarContainer}>
-            <Fab className={classes.fab} color="secondary" aria-label="edit" >
+            {ownProfile && <Fab className={classes.fab} color="secondary" aria-label="edit" >
                 <Link to="/editprofile">
                     <Edit />
                 </Link>
-            </Fab>
-            <img className={classes.avatar} alt={avatar} src={avatar} />
+            </Fab>}
+            {avatar ? <img className={classes.avatar} alt={avatar} src={avatar} />
+                : <Box className={classes.noAvatar}> NO AVATAR</Box>}
         </Box>
     )
 }

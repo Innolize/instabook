@@ -46,6 +46,8 @@ export const Publicacion = ({ props }) => {
     const currentUserID = useSelector(state => state.firebase.auth.uid)
     const users = useSelector(state => state.firestore.data.usuarios)
 
+
+
     const userLike = props.likes.includes(currentUserID)
     const selfpost = (currentUserID === userID)
     const classes = useStyle()
@@ -54,7 +56,7 @@ export const Publicacion = ({ props }) => {
     if (!isLoaded(users)) {
         return <div>loading...</div>
     }
-
+    
     const authorPost = users[userID]
 
     return (
@@ -63,7 +65,7 @@ export const Publicacion = ({ props }) => {
                 <CardHeader
                     avatar={
                         <NavLink to={`/profile/${props.userID}`}>
-                            <Avatar className={classes.avatarLarge} alt="avatar" src={authorPost.avatar} />
+                            <Avatar className={classes.avatarLarge} alt="avatar" src={authorPost ? authorPost.avatar : ""} />
                         </NavLink>
                     }
 
