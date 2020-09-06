@@ -54,10 +54,9 @@ const CrearPublicacion = () => {
     }
 
     const usuario = usuarios[userID]
-    const { firstName, lastName, avatar } = usuario
     const nuevaPublicacion = () => {
         const linkConvertido = youtubeLink.replace("watch?v=", "embed/")
-        dispatch(agregaPublicacion({ comment: value, firstName, lastName, userID, youtube: linkConvertido, image: imageLink }))
+        dispatch(agregaPublicacion({ comment: value, firstName: usuario.firstName, lastName: usuario.lastName, userID, youtube: linkConvertido, image: imageLink }))
         setValue("")
         setYoutubeLink("")
         setImageLink("")
@@ -79,10 +78,10 @@ const CrearPublicacion = () => {
         <Card className={classes.root}>
             <CardHeader
                 avatar={
-                    <Avatar className={classes.avatarLarge} alt="avatar" src={avatar}> </Avatar>
+                    <Avatar className={classes.avatarLarge} alt="avatar" src={usuario.avatar}> </Avatar>
                 }
                 title={
-                    <Typography variant="h5"> {firstName + " " + lastName}</Typography>}
+                    <Typography variant="h5"> {usuario.firstName + " " + usuario.lastName}</Typography>}
             />
             <CardContent>
                 <TextField

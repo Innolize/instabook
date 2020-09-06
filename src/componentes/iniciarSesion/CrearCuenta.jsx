@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
     const dispatch = useDispatch()
+
     const firstName = useFormInput("")
     const lastName = useFormInput("")
     const email = useFormInput("")
@@ -74,8 +75,11 @@ export default function SignUp() {
     const classes = useStyles();
 
     const authFirebase = useSelector(state => state.firebase.auth.uid)
+    const usuarios = useSelector(state => state.firestore.data.usuarios)
+    console.log(authFirebase)
 
-    if (authFirebase)
+    if (authFirebase && usuarios[authFirebase])
+
         return <Redirect to="/"></Redirect>
 
     return (

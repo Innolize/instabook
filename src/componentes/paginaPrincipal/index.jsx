@@ -12,10 +12,6 @@ const useStyles = makeStyles(() => ({
 
 const PaginaPrincipal = () => {
     const classes = useStyles()
-    const propiedadesLista = {
-        collection: "publicaciones",
-        orderBy: ['date', 'desc']
-    }
 
     return (
         <Grid container className={classes.posicionamientoPrincipal}>
@@ -26,7 +22,7 @@ const PaginaPrincipal = () => {
             </Grid>
             <Grid item xs={12} sm={8} md={6} lg={4}>
                 <CrearComentario></CrearComentario>
-                <ListaPublicaciones objeto={propiedadesLista} />
+                <ListaPublicaciones />
             </Grid>
             <Grid item xs={false} sm={2} md={3} lg={4} />
         </Grid>

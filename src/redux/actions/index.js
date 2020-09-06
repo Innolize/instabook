@@ -63,7 +63,6 @@ export const quitarLike = (payload) => {
 
 
 export const subirImagen = (payload) => {
-    console.log(payload)
     const { imagen, userID } = payload
     return async (dispatch, getState, { getFirebase, getFirestore }) => {
         debugger
