@@ -4,9 +4,7 @@ import Comentario from './Comentario'
 import { useFirestoreConnect } from 'react-redux-firebase'
 import { useSelector } from 'react-redux'
 
-const ListaComentarios = (props) => {
-    const userID = props.userID
-    const postID = props.postID
+const ListaComentarios = ({ postID }) => {
 
     useFirestoreConnect([{
         collection: `publicaciones/${postID}/comentarios`,
@@ -17,9 +15,9 @@ const ListaComentarios = (props) => {
     const comentarios = useSelector(state => state.firestore.ordered[`publicacion_${postID}_comentarios`])
     return (
         <div>
-            {comentarios && comentarios.map((x, i) => <Comentario key={i} props={x}></Comentario>)}
+            {comentarios && comentarios.map((comentario, i) => <Comentario key={i} props={comentario}></Comentario>)}
             <CrearComentario
-                props={{ userID, postID }}
+                postID={postID}
             ></CrearComentario>
         </div >
     )

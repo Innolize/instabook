@@ -64,6 +64,7 @@ const EditProfile = () => {
     const firstName = useFormInput(user.firstName)
     const lastName = useFormInput(user.lastName)
     const [newImage, setNewImage] = useState("")
+    console.log(newImage)
 
     const info = {
         userID: loggedUser,

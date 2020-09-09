@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
     },
     avatarContainer: {
-        minHeight: 400,
+        minHeight: 150,
         display: "flex",
         justifyContent: "center",
     },

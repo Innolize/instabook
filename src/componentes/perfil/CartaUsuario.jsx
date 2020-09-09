@@ -9,7 +9,7 @@ import Avatar from './Avatar'
 const useStyles = makeStyles((theme) => ({
     root: {
         width: 480,
-        minHeight: 400,
+        minHeight: 200,
         display: "flex",
         flexDirection: "column",
         marginTop: "10px",
@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     },
     contenedor: {
         minWidth: 480,
-        minHeight: 250,
         backgroundColor: 'gray'
     },
     spinnerContainer: {

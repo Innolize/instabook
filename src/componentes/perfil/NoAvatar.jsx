@@ -10,10 +10,17 @@ const NoAvatar = () => {
     const { userID } = useParams()
     const dispatch = useDispatch()
     const [imagen, setImagen] = useState(null)
-
+console.log(imagen)
+debugger
     const userLogged = useSelector(state => state.firebase.auth.uid)
     const ownProfile = (userLogged === userID)
     debugger
+
+    const manejadorSubirImagen = () => {
+
+        dispatch(subirImagen({ imagen, userID }))
+    }
+
 
     return (
         <>
@@ -21,7 +28,7 @@ const NoAvatar = () => {
             {ownProfile &&
                 <>
                     <Input type='file' onChange={(e) => setImagen(e.target.files[0])}> </Input>
-                    <Button onClick={() => dispatch(subirImagen({ imagen, userID }))}>UPLOAD!</Button>
+                    <Button onClick={manejadorSubirImagen}>UPLOAD!</Button>
                 </>
             }
         </>

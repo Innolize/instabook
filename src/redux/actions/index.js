@@ -92,6 +92,7 @@ export const subirImagen = (payload) => {
 };
 
 export const agregaComentario = (payload) => {
+    console.log(payload)
     const { postID } = payload
     return async (dispatch, getState, { getFirebase, getFirestore }) => {
 

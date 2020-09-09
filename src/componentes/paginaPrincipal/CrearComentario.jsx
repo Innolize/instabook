@@ -16,28 +16,29 @@ const useStyles = makeStyles({
 })
 
 
-const CrearComentario = ({ props }) => {
+const CrearComentario = ({ postID }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const [comentario, setComentario] = useState("")
 
+
+    const currentUserID = useSelector(state => state.firebase.auth.uid)
+    const users = useSelector(state => state.firestore.data.usuarios)
+
     const crearComentario = () => {
-        dispatch(agregaComentario({ ...props, comment: comentario })
-        )
+        dispatch(agregaComentario({ postID, comment: comentario, commentAuthor: currentUserID }))
         setComentario("")
     }
 
-    const userID = useSelector(state => state.firebase.auth.uid)
-    const users = useSelector(state => state.firestore.data.usuarios)
 
-    if (!userID) {
+    if (!currentUserID) {
         return null
     }
 
     if (!isLoaded(users)) {
         return <div>loading...</div>
     }
-    const currentUser = users[userID]
+    const currentUser = users[currentUserID]
 
 
     return (

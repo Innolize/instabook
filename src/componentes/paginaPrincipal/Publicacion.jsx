@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, CardContent, Typography, makeStyles, Avatar, IconButton, CardHeader, CardActions, Menu, MenuItem, CardMedia, Divider } from '@material-ui/core'
+import { Card, CardContent, Typography, makeStyles, Avatar, IconButton, CardHeader, CardActions, Menu, MenuItem, CardMedia } from '@material-ui/core'
 import { Share, FavoriteBorder, MoreVert, Favorite } from '@material-ui/icons'
 import { eliminaPublicacion, darLike, quitarLike } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
@@ -71,7 +71,7 @@ export const Publicacion = ({ props }) => {
 
                     title={
                         <NavLink to={`/profile/${props.userID}`} className={classes.linkSinDecoracion}>
-                            <Typography variant="h6">{authorPost.firstName + " " + authorPost.lastName}</Typography>
+                            <Typography variant="h5">{authorPost.firstName + " " + authorPost.lastName}</Typography>
                         </NavLink>
                     }
                     subheader={time}
@@ -101,7 +101,11 @@ export const Publicacion = ({ props }) => {
                     title="test"
                 />}
                 < CardActions >
-                    <IconButton onClick={userLike ? () => dispatch(quitarLike({ publicacionID: props.id, IDUsuario: currentUserID })) : () => dispatch(darLike({ publicacionID: props.id, IDUsuario: currentUserID }))}>
+                    <IconButton 
+                    onClick={
+                        currentUserID ? 
+                        (userLike ? () => dispatch(quitarLike({ publicacionID: props.id, IDUsuario: currentUserID })) : () => dispatch(darLike({ publicacionID: props.id, IDUsuario: currentUserID }))) : () => console.log('usuario no logeado')}>
+
                         {userLike ? <Favorite color="secondary" /> : <FavoriteBorder />}
                     </IconButton>
                     {props.likes.length > 0 ? props.likes.length : null}
@@ -111,10 +115,7 @@ export const Publicacion = ({ props }) => {
 1
                 </CardActions >
 
-                <Divider variant="middle" ></Divider>
-
                 <ListaComentarios
-                    userID={props.userID}
                     postID={props.id}
                 ></ListaComentarios>
             </Card >
