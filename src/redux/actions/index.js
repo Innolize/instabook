@@ -1,4 +1,5 @@
 export const agregaPublicacion = (payload) => {
+    console.log(payload)
     return async (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
         await firestore.collection("publicaciones").add({
@@ -182,9 +183,7 @@ export const actualizarPerfilCompleto = (payload) => {
         const imagesPath = "perfil";
 
         try {
-            debugger
             if (image) {
-                debugger
                 const respuesta = await firebase.uploadFile(imagesPath, image)
                 const referencia = respuesta.uploadTaskSnapshot.ref.location.path_
                 const storage = firebase.storage();
@@ -196,12 +195,10 @@ export const actualizarPerfilCompleto = (payload) => {
                     avatar: imageURL,
                     imageLocation: referencia
                 })
-                debugger
                 firebase.deleteFile(oldPathImage)
                 console.log("exito!")
                 dispatch({ type: "PROFILE_UPDATE_WITH_IMAGE" });
             } else {
-                debugger
                 firestore.collection("usuarios").doc(userID).update({
                     ...info,
                 })

@@ -39,6 +39,7 @@ const CrearPublicacion = () => {
     const [image, setImage] = useState(false)
     const [youtubeLink, setYoutubeLink] = useState('')
     const [imageLink, setImageLink] = useState('')
+    console.log(imageLink)
 
     const usuarios = useSelector(state => state.firestore.data.usuarios)
     const userID = useSelector(state => state.firebase.auth.uid)

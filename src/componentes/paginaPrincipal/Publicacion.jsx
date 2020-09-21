@@ -97,7 +97,7 @@ export const Publicacion = ({ props }) => {
                 />}
                 {props.image && <CardMedia
                     className={classes.cardImage}
-                    image={"https://i.picsum.photos/id/401/200/400.jpg?hmac=mqbaQswuaRhN4kdxiidldM2DsH-ykG3TOqlyZO8ZlpY"}
+                    image={props.image}
                     title="test"
                 />}
                 < CardActions >
