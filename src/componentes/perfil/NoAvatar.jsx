@@ -4,23 +4,16 @@ import { useParams } from 'react-router-dom'
 import { subirImagen } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 
-
-
 const NoAvatar = () => {
     const { userID } = useParams()
     const dispatch = useDispatch()
     const [imagen, setImagen] = useState(null)
-console.log(imagen)
-debugger
     const userLogged = useSelector(state => state.firebase.auth.uid)
     const ownProfile = (userLogged === userID)
-    debugger
 
     const manejadorSubirImagen = () => {
-
         dispatch(subirImagen({ imagen, userID }))
     }
-
 
     return (
         <>
